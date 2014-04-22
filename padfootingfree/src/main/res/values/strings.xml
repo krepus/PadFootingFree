@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Pad Footing Free</string>
+    <string name="action_settings">Settings</string>
+
+    <!--menu strings-->
+    <string name="preferences_title_str">Preference</string>
+    <string name="About_str">About</string>
+
+
+    <!-- input strings -->
+
+    <string name="Bx_str_ui">Footing width, Bx</string>
+    <string name="By_str_ui">Footing length, By</string>
+    <string name="V_str_ui">Axial load, P</string>
+    <string name="ex_str_ui">Load eccentricity (along footing width), ex</string>
+    <string name="ey_str_ui">Load eccentricity (along footing length), ey</string>
+
+
+    <!-- dimensions -->
+    <dimen name="txtviewwidth">230dip</dimen>
+    <dimen name="edittextwidth">100dip</dimen>
+    <dimen name="titleHeight">24dip</dimen>
+
+
+    <!-- PREFERENCE STRINGS -->
+    <string name="BX_PREF">BX_PREF</string>
+    <string name="BY_PREF">BY_PREF</string>
+    <string name="V_PREF">V_PREF</string>
+    <string name="EX_PREF">EX_PREF</string>
+    <string name="EY_PREF">EY_PREF</string>
+
+    <string name="UNIT">UNIT</string>
+    <string name="SI">SI</string>
+    <string name="Imperial">Imperial</string>
+
+
+    <array name="units_array_entries">
+        <item>@string/SI</item>
+        <item>@string/Imperial</item>
+    </array>
+
+
+</resources>

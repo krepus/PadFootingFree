@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+
+
+    <style name="styTextUi" parent="AppTheme">
+        <item name="android:layout_width">@dimen/txtviewwidth</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:layout_marginBottom">10dip</item>
+    </style>
+
+    <style name="styEdit" parent="AppTheme">
+        <item name="android:layout_width">@dimen/edittextwidth</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="styCalcSection" parent="AppTheme">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/titleHeight</item>
+        <item name="android:textStyle">bold|italic</item>
+
+    </style>
+
+
+</resources>

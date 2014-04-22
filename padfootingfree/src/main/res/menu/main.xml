@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.padfootingfree.MainActivity" >
+
+    <item
+        android:id="@+id/preferences_id"
+        android:title="@string/preferences_title_str" />
+    <item
+        android:id="@+id/About"
+        android:title="@string/About_str" />
+
+</menu>

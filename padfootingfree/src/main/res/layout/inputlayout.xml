@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="left|center_vertical">
+
+            <TableRow
+                style="@style/styTextUi"
+                android:layout_gravity="left|center_vertical">
+
+                <TextView
+                    style="@style/styTextUi"
+                    android:text="@string/Bx_str_ui"
+                    android:id="@+id/Bx_textview_ID" />
+
+                <EditText
+                    style="@style/styEdit"
+                    android:inputType="numberDecimal"
+                    android:text="2.5"
+                    android:id="@+id/Bx_in"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow
+                style="@style/styTextUi"
+                android:layout_gravity="left|center_vertical">
+
+                <TextView
+                    style="@style/styTextUi"
+                    android:text="@string/By_str_ui"
+                    android:id="@+id/By_textview_ID" />
+
+                <EditText
+                    style="@style/styEdit"
+                    android:inputType="numberDecimal"
+                    android:text="1.5"
+                    android:id="@+id/By_in"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow
+                style="@style/styTextUi"
+                android:layout_gravity="left|center_vertical">
+
+                <TextView
+                    style="@style/styTextUi"
+                    android:text="@string/V_str_ui"
+                    android:id="@+id/V_textview_ID" />
+
+                <EditText
+                    style="@style/styEdit"
+                    android:inputType="numberDecimal"
+                    android:text="400"
+                    android:id="@+id/V_in"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow
+                style="@style/styTextUi"
+                android:layout_gravity="left|center_vertical">
+
+                <TextView
+                    style="@style/styTextUi"
+                    android:text="@string/ex_str_ui"
+                    android:id="@+id/ex_textview_ID" />
+
+                <EditText
+                    style="@style/styEdit"
+                    android:inputType="numberDecimal"
+                    android:text="0.375"
+                    android:id="@+id/ex_in"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow
+                style="@style/styTextUi"
+                android:layout_gravity="left|center_vertical">
+
+                <TextView
+                    style="@style/styTextUi"
+                    android:text="@string/ey_str_ui"
+                    android:id="@+id/ey_textview_ID" />
+
+                <EditText
+                    style="@style/styEdit"
+                    android:inputType="numberDecimal"
+                    android:text="0.3"
+                    android:id="@+id/ey_in"
+                    android:singleLine="true" />
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+</ScrollView>
