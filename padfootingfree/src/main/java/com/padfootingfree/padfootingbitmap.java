@@ -3,6 +3,7 @@ package com.padfootingfree;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -40,10 +41,14 @@ public class padfootingbitmap {
             int bearingcase) {
         //set fields for actual dim input by user
         mbitmap_final = bitmap;
+        this.Bx = Bx;
+        this.By = By;
+        this.ex = ex;
+        this.ey = ey;
 
         mbitmapWidth = bitmap.getWidth();
         mbitmapHeight = mbitmapWidth;
-        mscale_geom = mbitmapWidth * 0.8d / max(Bx.v(), By.v());
+        mscale_geom = mbitmapWidth * 0.7d / max(Bx.v(), By.v());
         mtxtht = txtht;  //20 for hdpi
 
 
@@ -89,6 +94,32 @@ public class padfootingbitmap {
         canvas.drawRect(pts[0], pts[1], pts[2], pts[3], paint);
 
 
+    }
+
+    public void drawCenterLine(Paint paint) {
+        //draw centerlines
+        //Points
+        PointF[] endpoint = new PointF[4];
+        endpoint[0] = new PointF(0, 0.f); //left end, horizontal line
+        endpoint[1] = new PointF(mfBx, 0.f);
+        endpoint[2] = new PointF(0.f, 0.f);//vertical
+        endpoint[3] = new PointF(0.f, mfBy);
+
+
+        //lines
+        float[] horline = {endpoint[0].x, endpoint[0].y, endpoint[1].x, endpoint[1].y};
+        float[] verline = {endpoint[2].x, endpoint[2].y, endpoint[3].x, endpoint[3].y};
+
+        Matrix matrix = new Matrix();
+        matrix.setTranslate(mx0, my0 - mfBy / 2.f);
+        matrix.mapPoints(verline);
+        matrix.reset();
+        matrix.setTranslate(mx0 - mfBx / 2.f, my0);
+        matrix.mapPoints(horline);
+
+        //draw lines
+        canvas.drawLines(horline, paint);
+        canvas.drawLines(verline, paint);
     }
 
     /**
@@ -220,6 +251,8 @@ public class padfootingbitmap {
 
         //draw actual circles
         canvas.drawCircle(pts[0], pts[1], mfDB / 2.f, paint);
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawCircle(pts[0], pts[1], mfDB, paint);
 
     }
 
@@ -241,15 +274,33 @@ public class padfootingbitmap {
         //draw boundary
         mpaint.setColor(Color.BLACK);
         mpaint.setStyle(Paint.Style.STROKE);
+        mpaint.setStrokeWidth(2.f);
         drawPFplan(mpaint);
 
         //draw dimension at bottom of plan
-        drawDim(Bx, 2 * mtxtht, mx0 - mfBx / 2.f, my0 + mfBy, 0.f, 1.f);
+        mpaint.setStrokeWidth(1.f);
+        drawDim(Bx, 2 * mtxtht, mx0 - mfBx / 2.f, my0 + mfBy / 2.f, 0.f, 1.f);
+        //draw dim at left side of plan
+        drawDim(By, 1.5f * mtxtht, mx0 - mfBx / 2.f, my0 - mfBy / 2.f, 90.f, 1.f);
+        //draw dim ex
+        drawDim(ex, 1.5f * mtxtht, mx0 - mfex, my0 + mfey, 0.f, 1.f);
+        //draw dim ex
+        drawDim(ey, 1.5f * mtxtht, mx0 - mfex, my0 + 0.f, 90.f, 1.f);
 
+        //draw point load location
         Paint reopaint = mpaint;
         reopaint.setStyle(Paint.Style.FILL);
         reopaint.setColor(Color.DKGRAY);
+        reopaint.setStrokeWidth(1.f);
         drawPointLoadLocation(reopaint);
+
+
+        //draw CL
+        Paint CLpaint = new Paint();
+        CLpaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        CLpaint.setPathEffect(new DashPathEffect(new float[]{40, 10, 20, 10}, 0));
+        CLpaint.setColor(Color.RED);
+        drawCenterLine(CLpaint);
 
         return mbitmap_final;
     }
