@@ -40,6 +40,11 @@ public class Footing_case4 implements Padfooting {
 
     }
 
+    public int getFootingCase() {
+
+        return 4;
+    }
+
     public String getReport() {
         return report;
     }

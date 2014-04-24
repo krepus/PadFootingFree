@@ -5,4 +5,5 @@ package com.padfootingfree;
  */
 public interface Padfooting {
     public String getReport();
+    public int getFootingCase();
 }
