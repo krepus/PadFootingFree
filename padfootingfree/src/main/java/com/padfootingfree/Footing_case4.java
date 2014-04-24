@@ -11,6 +11,7 @@ public class Footing_case4 implements Padfooting {
     double Bx, By, ex, ey, V;
     double A, C;
     String report;
+    final int numparam = 3;
 
     Footing_case4(double V,
                   double Bx,
@@ -50,7 +51,7 @@ public class Footing_case4 implements Padfooting {
     }
 
     public double[] get_a_type4() {
-        double[] a = new double[2];
+        double[] a = new double[numparam];
         double tgalpha;
         tgalpha = C / A;
         a[0] = (C - By) / tgalpha;
@@ -61,7 +62,7 @@ public class Footing_case4 implements Padfooting {
     }
 
     public double[] get_c_type4() {
-        double[] c = new double[2];
+        double[] c = new double[numparam];
         double tgalpha;
         tgalpha = C / A;
         c[0] = By;
@@ -73,7 +74,7 @@ public class Footing_case4 implements Padfooting {
     public double[] get_F() {
         double[] a = get_a_type4();
         double[] c = get_c_type4();
-        double[] F = new double[2];
+        double[] F = new double[numparam];
         F[0] = a[0] * c[0];
         F[1] = a[1] * c[1];
         F[2] = a[2] * c[2] / 0.2e1;
@@ -98,7 +99,7 @@ public class Footing_case4 implements Padfooting {
 
     public double[] get_e() {
         double[] a = get_a_type4();
-        double[] e = new double[3];
+        double[] e = new double[numparam];
         double Ug;
         Ug = get_ug();
         e[0] = -Ug + a[0] / 0.2e1;
@@ -109,7 +110,7 @@ public class Footing_case4 implements Padfooting {
 
     public double[] get_f() {
         double[] c = get_c_type4();
-        double[] f = new double[3];
+        double[] f = new double[numparam];
         double Vg = get_vg();
         f[0] = c[0] / 0.2e1 - Vg;
         f[1] = -Vg + c[1] / 0.2e1;

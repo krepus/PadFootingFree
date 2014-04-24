@@ -3,6 +3,7 @@ package com.padfootingfree;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,7 +85,7 @@ public class DesignOutFragment extends Fragment {
                 Report = padfooting.getReport();
             }
 
-            //showSketch();
+            showSketch();
 
             TextView textView = (TextView) view.findViewById(R.id.report_textview_id);
             textView.setText(Report);
@@ -129,6 +131,29 @@ public class DesignOutFragment extends Fragment {
             Toast.makeText(getActivity(), "Check input for invalid entries..", Toast.LENGTH_LONG).show();
             return false;
         }
+
+    }
+
+    private void showSketch() {
+
+
+        int mbitmapWidth = getResources().getDisplayMetrics().widthPixels;
+        int mbitmapHeight = mbitmapWidth;
+        Bitmap bitmap = Bitmap.createBitmap(mbitmapWidth, mbitmapHeight, Bitmap.Config.ARGB_8888);
+
+        //insert image
+
+        int txtht = 15 * (int) getResources().getDisplayMetrics().density;
+        padfootingbitmap bmp = new padfootingbitmap(
+                bitmap,
+                txtht,
+                Bx,
+                By,
+                ex,
+                ey,
+                4);
+        ImageView imageView = (ImageView) view.findViewById(R.id.sketch_img);
+        imageView.setImageBitmap(bmp.getBitmap());
 
     }
 }
