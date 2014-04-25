@@ -1,30 +1,47 @@
 package com.padfootingfree;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PointF;
+
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
+import static com.padfootingfree.MyDouble.Unit.*;
 
 /**
  * Created by j0sua3 on 19/04/2014.
  */
-public class Footing_case4 implements Padfooting {
+public class Footing_case4 extends PadfootingbitmapGeometry implements Padfooting {
 
     double Bx, By, ex, ey, V;
     double A, C;
     String report;
     final int numparam = 3;
 
-    Footing_case4(double V,
-                  double Bx,
-                  double By,
-                  double ex,
-                  double ey) {
-        this.V = V;
-        this.Bx = Bx;
-        this.By = By;
-        this.ex = ex;
-        this.ey = ey;
-        A = -4 * ex + 2 * Bx;
-        C = 2 * By - 4 * ey;
+
+    Footing_case4(
+            Bitmap bitmap,
+            int txtht,
+            MyDouble Bx,
+            MyDouble By,
+            MyDouble ex,
+            MyDouble ey,
+            MyDouble V) {
+
+        super(bitmap, txtht, Bx, By, ex, ey);
+
+
+        this.V = V.dblVal(kN);
+        this.Bx = Bx.dblVal(m);
+        this.By = By.dblVal(m);
+        this.ex = ex.dblVal(m);
+        this.ey = ey.dblVal(m);
+        A = -4 * ex.dblVal(m) + 2 * Bx.dblVal(m);
+        C = 2 * By.dblVal(m) - 4 * ey.dblVal(m);
 
         double accuracy = 1e-6;
         double[] AC = get_AC();
@@ -37,18 +54,15 @@ public class Footing_case4 implements Padfooting {
             A2 = AC[0];
             C2 = AC[1];
         }
+
+
         report = "A = " + Double.toString(A) + " and C = " + Double.toString(C);
 
+        Double qmax = getqmax();
+        report = report + "\r\n\r\nqmax = " + qmax.toString();
+
     }
 
-    public int getFootingCase() {
-
-        return 4;
-    }
-
-    public String getReport() {
-        return report;
-    }
 
     public double[] get_a_type4() {
         double[] a = new double[numparam];
@@ -181,4 +195,102 @@ public class Footing_case4 implements Padfooting {
         return AC;
     }
 
+    public double getqmax() {
+        double Xv;
+        double Yv;
+        double Ug;
+        double Vg;
+        double tgbeta;
+        double tgalpha_new;
+        double Ix;
+        double Iy;
+        double Ixy;
+        double[] F = get_F();
+        double X0;
+        Ug = get_ug();
+        Vg = get_vg();
+        Xv = -ex + Bx / 0.2e1 - Ug;
+        Yv = -ey + By / 0.2e1 - Vg;
+        tgbeta = Yv / Xv;
+        Ix = get_Ix();
+        Iy = get_Iy();
+        Ixy = get_Ixy();
+        tgalpha_new = (Ix - Ixy * tgbeta) / (Iy * tgbeta - Ixy);
+        X0 = -(Iy + Ixy / tgalpha_new) / Xv / (F[0] + F[1] + F[2]);
+        return A * V / (X0 * (F[0] + F[1] + F[2]));
+    }
+
+
+    public String getReport() {
+        return report;
+    }
+
+
+    public Bitmap getSketch() {
+
+        canvas = new Canvas(mbitmap_final);
+        drawPFGeometryAndLoadPoint(canvas); //pad geom drawn to canvas
+
+        //draw bearing area on the same canvas specific to this footing case
+        Paint paint_bearing_area = new Paint();
+        paint_bearing_area.setColor(Color.BLUE);
+        paint_bearing_area.setStyle(Paint.Style.FILL);
+        paint_bearing_area.setAntiAlias(true);
+        paint_bearing_area.setAlpha(20);
+
+        drawBearingArea(paint_bearing_area);
+
+
+        return mbitmap_final;
+    }
+
+    public void drawBearingArea(Paint paint) {
+        //4 corner points
+        //draw boundary of bearing area
+
+        MyDouble bA, bC;
+        bA = new MyDouble(A, m);
+        bC = new MyDouble(C, m);
+
+        //intersection of line AC at y = mfBy
+        //dimensions in mm
+        float xfAC = (float) (bA.v() / bC.v() * (bC.v() - By * 1000.f) * mscale_geom);
+        float yfAC = (float) (bC.v() / bA.v() * (bA.v() - Bx * 1000.f) * mscale_geom);//taken from bottom of footing
+
+        PointF[] pointFs = new PointF[5];
+        pointFs[0] = new PointF(0.f, 0.f);
+        pointFs[1] = new PointF(xfAC, 0.f);
+        pointFs[2] = new PointF(mfBx, mfBy - yfAC);
+        pointFs[3] = new PointF(mfBx, mfBy);
+        pointFs[4] = new PointF(0.f, mfBy);
+
+        float[] boundaryPts = {pointFs[0].x, pointFs[0].y,
+                pointFs[1].x, pointFs[1].y,
+                pointFs[2].x, pointFs[2].y,
+                pointFs[3].x, pointFs[3].y,
+                pointFs[4].x, pointFs[4].y,
+        };
+        //create matrix to translate
+        Matrix matrix = new Matrix();
+        //translate points using matrix object
+        matrix.setTranslate(mx0 - (mfBx / 2.f), my0 - (mfBy / 2.f));
+        matrix.mapPoints(boundaryPts);  //apply translation matrix to pts!!!
+
+
+        //build path from translated points
+        Path boundary = new Path();
+        boundary.reset();
+        boundary.moveTo(boundaryPts[0], boundaryPts[1]);
+        boundary.lineTo(boundaryPts[2], boundaryPts[3]);
+        boundary.lineTo(boundaryPts[4], boundaryPts[5]);
+        boundary.lineTo(boundaryPts[6], boundaryPts[7]);
+        boundary.lineTo(boundaryPts[8], boundaryPts[9]);
+        boundary.lineTo(boundaryPts[0], boundaryPts[1]);
+        //draw actual lines
+        canvas.drawPath(boundary, paint);
+
+    }
+
+
 }
+

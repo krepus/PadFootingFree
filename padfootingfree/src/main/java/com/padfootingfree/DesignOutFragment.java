@@ -1,27 +1,19 @@
 package com.padfootingfree;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.padfootingfree.MyDouble.Unit.*;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class DesignOutFragment extends Fragment {
     View view;
@@ -79,13 +71,19 @@ public class DesignOutFragment extends Fragment {
 
         if (getDesignInput()) {
 
-            padfooting = new Footing_case4(V.dblVal(kN), Bx.dblVal(m), By.dblVal(m), ex.dblVal(m), ey.dblVal(m));
 
-            if (padfooting.getFootingCase() == 4) {
-                Report = padfooting.getReport();
-            }
+            //get display parameters and pass to sketch method
+            int mbitmapWidth = getResources().getDisplayMetrics().widthPixels;
+            int mbitmapHeight = mbitmapWidth;
+            Bitmap bitmap = Bitmap.createBitmap(mbitmapWidth, mbitmapHeight, Bitmap.Config.ARGB_8888);
+            int txtht = 15 * (int) getResources().getDisplayMetrics().density;
 
-            showSketch();
+            padfooting = new Footing_case4(bitmap, txtht,Bx, By, ex, ey, V);
+
+            Report = padfooting.getReport();
+
+            ImageView imageView = (ImageView) view.findViewById(R.id.sketch_img);
+            imageView.setImageBitmap(padfooting.getSketch());
 
             TextView textView = (TextView) view.findViewById(R.id.report_textview_id);
             textView.setText(Report);
@@ -134,26 +132,19 @@ public class DesignOutFragment extends Fragment {
 
     }
 
-    private void showSketch() {
+    private void showSketch(int bearing_case) {
 
 
-        int mbitmapWidth = getResources().getDisplayMetrics().widthPixels;
-        int mbitmapHeight = mbitmapWidth;
-        Bitmap bitmap = Bitmap.createBitmap(mbitmapWidth, mbitmapHeight, Bitmap.Config.ARGB_8888);
+        PadfootingbitmapGeometry padfootingbitmap = null;
+        switch (bearing_case) {
+            case 4:
 
-        //insert image
 
-        int txtht = 15 * (int) getResources().getDisplayMetrics().density;
-        padfootingbitmap bmp = new padfootingbitmap(
-                bitmap,
-                txtht,
-                Bx,
-                By,
-                ex,
-                ey,
-                4);
-        ImageView imageView = (ImageView) view.findViewById(R.id.sketch_img);
-        imageView.setImageBitmap(bmp.getBitmap());
+                return;
+            default:
+                return;
+        }
+
 
     }
 }

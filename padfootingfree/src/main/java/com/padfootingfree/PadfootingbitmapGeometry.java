@@ -14,7 +14,7 @@ import static java.lang.Math.max;
 /**
  * Created by j0sua3 on 14/07/13.
  */
-public class padfootingbitmap {
+public class PadfootingbitmapGeometry {
 
     public Canvas canvas;
     public Bitmap mbitmap_final;
@@ -27,18 +27,17 @@ public class padfootingbitmap {
     public PointF[] mPtsPF;
     public Paint mpaint;
 
-    MyDouble Bx, By, ex, ey, V;
+    MyDouble Bx, By, ex, ey, A, C;
 
 
     //constructor
-    public padfootingbitmap(
+    public PadfootingbitmapGeometry(
             Bitmap bitmap,
             int txtht,
             MyDouble Bx,
             MyDouble By,
             MyDouble ex,
-            MyDouble ey,
-            int bearingcase) {
+            MyDouble ey) {
         //set fields for actual dim input by user
         mbitmap_final = bitmap;
         this.Bx = Bx;
@@ -95,6 +94,7 @@ public class padfootingbitmap {
 
 
     }
+
 
     public void drawCenterLine(Paint paint) {
         //draw centerlines
@@ -256,10 +256,9 @@ public class padfootingbitmap {
 
     }
 
-    public Bitmap getBitmap() {
+    public void drawPFGeometryAndLoadPoint(Canvas canvas) {
 
         //mbitmap_final = bitmap;
-        canvas = new Canvas(mbitmap_final);
 
         mpaint = new Paint();
         mpaint.setAntiAlias(true);
@@ -269,7 +268,6 @@ public class padfootingbitmap {
         mpaint.setColor(Color.WHITE);
         mpaint.setStyle(Paint.Style.FILL);
         drawPFplan(mpaint);
-
 
         //draw boundary
         mpaint.setColor(Color.BLACK);
@@ -298,11 +296,9 @@ public class padfootingbitmap {
         //draw CL
         Paint CLpaint = new Paint();
         CLpaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        CLpaint.setPathEffect(new DashPathEffect(new float[]{40, 10, 20, 10}, 0));
+        CLpaint.setPathEffect(new DashPathEffect(new float[]{40, 10, 10, 10}, 0));
         CLpaint.setColor(Color.RED);
         drawCenterLine(CLpaint);
-
-        return mbitmap_final;
     }
 
 }
