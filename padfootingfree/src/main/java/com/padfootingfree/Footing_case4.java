@@ -11,13 +11,14 @@ import android.graphics.PointF;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 import static com.padfootingfree.MyDouble.Unit.*;
+import static com.padfootingfree.MyDouble.*;
 
 /**
  * Created by j0sua3 on 19/04/2014.
  */
 public class Footing_case4 extends PadfootingbitmapGeometry implements Padfooting {
 
-    double Bx, By, ex, ey, V;
+    double Bx, By, ex, ey, V, cx, cy, d;
     double A, C;
     String report;
     final int numparam = 3;
@@ -30,7 +31,12 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
             MyDouble By,
             MyDouble ex,
             MyDouble ey,
-            MyDouble V) {
+            MyDouble V,
+            MyDouble cx,
+            MyDouble cy,
+            MyDouble d
+
+    ) {
 
         super(bitmap, txtht, Bx, By, ex, ey);
 
@@ -40,26 +46,12 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
         this.By = By.dblVal(m);
         this.ex = ex.dblVal(m);
         this.ey = ey.dblVal(m);
+        this.cx = cx.dblVal(m);
+        this.cy = cy.dblVal(m);
+        this.d = d.dblVal(m);
+
         A = -4 * ex.dblVal(m) + 2 * Bx.dblVal(m);
         C = 2 * By.dblVal(m) - 4 * ey.dblVal(m);
-
-        double accuracy = 1e-6;
-        double[] AC = get_AC();
-        double A2 = AC[0];
-        double C2 = AC[1];
-        while (abs(A2 - A) > accuracy && abs(C2 - C) > accuracy) {
-            AC = get_AC();
-            A = A2;
-            C = C2;
-            A2 = AC[0];
-            C2 = AC[1];
-        }
-
-
-        report = "A = " + Double.toString(A) + " and C = " + Double.toString(C);
-
-        Double qmax = getqmax();
-        report = report + "\r\n\r\nqmax = " + qmax.toString();
 
     }
 
@@ -163,7 +155,7 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
         double[] F = get_F();
         double[] e = get_e();
         double[] f = get_f();
-        Ist = -Math.pow(a[2], 0.2e1) * Math.pow(c[2], 0.2e1) / 0.72e2;
+        Ist = -pow(a[2], 0.2e1) * pow(c[2], 0.2e1) / 0.72e2;
         return (Ist + F[0] * e[0] * f[0] + F[1] * e[1] * f[1] + F[2] * e[2] * f[2]);
     }
 
@@ -220,8 +212,157 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
         return A * V / (X0 * (F[0] + F[1] + F[2]));
     }
 
+    public double getShearVyz() {
 
-    public String getReport() {
+        double qmax = getqmax();
+        double Xv = Bx / 0.2e1 - cx / 0.2e1 - d;
+        double bxo = A * (-By + C) / C;
+
+
+        if (Xv > 0.d) {
+            if (bxo > Xv) {
+
+                double Vyz_Xv = -(qmax * Xv * By * (C * Xv - 2.d * C * A + A * By) / C / A) / 0.2e1;
+                return Vyz_Xv;
+            } else {
+                double Vyz_bxo = qmax * pow(C, -0.2e1) * (-0.3e1 * pow(A, 0.3e1) * By * By * C
+                        + 0.3e1 * pow(A, 0.3e1) * By * C * C + pow(Xv, 0.3e1) * pow(C, 0.3e1)
+                        + pow(A, 0.3e1) * pow(By, 0.3e1) - pow(A, 0.3e1) * pow(C, 0.3e1)
+                        - 0.3e1 * pow(C, 0.3e1) * A * Xv * Xv + 0.3e1 * A * A * pow(C, 0.3e1) * Xv)
+                        * pow(A, -0.2e1) / 0.6e1;
+                return Vyz_bxo;
+            }
+        } else {
+            return 0.d;
+        }
+    }
+
+    public double getMy() {
+
+        double qmax = getqmax();
+        double Xm = Bx / 0.2e1 - cx / 0.2e1;
+        double bxo = A * (-By + C) / C;
+
+        if (Xm > 0.d) {
+            if (bxo > Xm) {
+                double My_Xm = -(qmax * Xm * By * (C * Xm - 2 * C * A + A * By) / C / A) / 0.2e1;
+                return My_Xm;
+            } else {
+                double My_bxo = -qmax * pow(C, -0.3e1) * (0.5e1 * pow(A, 0.4e1) * pow(By, 0.4e1)
+                        - 0.6e1 * pow(A, 0.4e1) * By * By * C * C + 0.12e2 * pow(A, 0.3e1) * By * By
+                        * Xm * C * C + 0.4e1 * pow(A, 0.4e1) * By * pow(C, 0.3e1) - 0.12e2 * pow(A, 0.3e1)
+                        * By * Xm * pow(C, 0.3e1) - 0.3e1 * pow(Xm, 0.4e1) * pow(C, 0.4e1) - 0.4e1
+                        * pow(A, 0.4e1) * pow(By, 0.3e1) * C + pow(A, 0.4e1) * pow(C, 0.4e1) + 0.8e1
+                        * pow(C, 0.4e1) * A * pow(Xm, 0.3e1) - 0.6e1 * A * A * pow(C, 0.4e1) * Xm * Xm)
+                        * pow(A, -0.2e1) / 0.24e2;
+
+                return My_bxo;
+            }
+        } else {
+            return 0.d;
+        }
+    }
+
+    public double getShearVxz() {
+
+        double qmax = getqmax();
+        double Xv = By / 0.2e1 - cy / 0.2e1 - d;
+        double byo = C * (-Bx + A) / A;
+
+
+        if (Xv > 0.d) {
+            if (byo > Xv) {
+
+                double Vxz_Xv = (qmax * Bx * Xv * (-C * Bx + 2 * C * A - A * Xv) / C / A) / 0.2e1;
+                return Vxz_Xv;
+            } else {
+                double Vxz_byo = -qmax * pow(A, -0.2e1) * (0.3e1 * pow(C, 0.3e1) * A * Bx * Bx
+                        - 0.3e1 * pow(C, 0.3e1) * Bx * A * A - pow(Xv, 0.3e1) * pow(A, 0.3e1)
+                        - pow(C, 0.3e1) * pow(Bx, 0.3e1) + pow(A, 0.3e1) * pow(C, 0.3e1)
+                        + 0.3e1 * C * pow(A, 0.3e1) * Xv * Xv - 0.3e1 * pow(A, 0.3e1) * C * C * Xv)
+                        * pow(C, -0.2e1) / 0.6e1;
+
+                return Vxz_byo;
+            }
+        } else {
+            return 0.d;
+        }
+    }
+
+    public double getMx() {
+
+        double qmax = getqmax();
+        double Xm = By / 0.2e1 - cy / 0.2e1;
+        double byo = C * (-Bx + A) / A;
+
+
+        if (Xm > 0.d) {
+            if (byo > Xm) {
+
+                double Mx_Xv = (qmax * Xm * Xm * Bx * (-2 * A * Xm - 3 * C * Bx + 6 * C * A) / C / A) / 0.12e2;
+                return Mx_Xv;
+            } else {
+                double Mx_byo = -qmax * pow(A, -0.3e1) * (pow(C, 0.4e1) * pow(Bx, 0.4e1) - 0.3e1
+                        * pow(C, 0.4e1) * Bx * Bx * A * A + 0.6e1 * pow(C, 0.3e1) * Bx * Bx * A
+                        * A * Xm + 0.2e1 * pow(C, 0.4e1) * Bx * pow(A, 0.3e1) - 0.6e1 * pow(C, 0.3e1)
+                        * Bx * pow(A, 0.3e1) * Xm - 0.2e1 * pow(Xm, 0.3e1) * pow(A, 0.4e1) - 0.2e1
+                        * A * pow(C, 0.3e1) * pow(Bx, 0.3e1) + 0.2e1 * pow(A, 0.4e1) * pow(C, 0.3e1)
+                        + 0.6e1 * C * pow(A, 0.4e1) * Xm * Xm - 0.6e1 * pow(A, 0.4e1) * C * C * Xm)
+                        * pow(C, -0.2e1) / 0.12e2;
+
+                return Mx_byo;
+            }
+        } else {
+            return 0.d;
+        }
+    }
+
+
+    public String getDesignReport(UnitType unitType) {
+
+        double accuracy = 1e-6;
+        double[] AC = get_AC();
+        double A2 = AC[0];
+        double C2 = AC[1];
+        while (abs(A2 - A) > accuracy && abs(C2 - C) > accuracy) {
+            AC = get_AC();
+            A = A2;
+            C = C2;
+            A2 = AC[0];
+            C2 = AC[1];
+        }
+
+
+        //MyDouble rA, rC, rVyz, rVxz, rMabtY, rMabtX;
+        MyDouble rA = new MyDouble(A, m);
+        MyDouble rC = new MyDouble(C, m);
+        MyDouble rqmax = new MyDouble(getqmax(), kPa);
+        MyDouble rVyz = new MyDouble(getShearVyz(), kN);
+        MyDouble rMy = new MyDouble(getMy(), kNm);
+        MyDouble rVxz = new MyDouble(getShearVxz(), kN);
+        MyDouble rMx = new MyDouble(getMx(), kN);
+
+
+        if (unitType.equals(UnitType.SI)) {
+            report = "Parameter A = " + rA.toString() + "\r\n" +
+                    "Parameter C = " + rC.toString() + "\r\n" +
+                    "Maximum bearing, qmax = " + rqmax.toString() + "\r\n" +
+                    "Shear force, Vyz = " + rVyz.toString() + "\r\n" +
+                    "Moment, My = " + rMy.toString() + "\r\n" +
+                    "Shear force, Vxz = " + rVxz.toString() + "\r\n" +
+                    "Moment, Mx = " + rMx.toString() + "\r\n";
+
+        } else {
+            report = "Parameter A = " + rA.toUnit(ft).toString() + "\r\n" +
+                    "Parameter C = " + rC.toUnit(ft).toString() + "\r\n" +
+                    "Maximum bearing, qmax = " + rqmax.toUnit(psf).toString() + "\r\n" +
+                    "Shear force, Vyz = " + rVyz.toUnit(kip).toString() + "\r\n" +
+                    "Moment, My = " + rMy.toUnit(kipft).toString() + "\r\n" +
+                    "Shear force, Vxz = " + rVxz.toUnit(kip).toString() + "\r\n" +
+                    "Moment, Mx = " + rMx.toUnit(kipft).toString() + "\r\n";
+        }
+
+
         return report;
     }
 

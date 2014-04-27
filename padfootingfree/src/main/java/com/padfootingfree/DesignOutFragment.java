@@ -18,7 +18,7 @@ import static com.padfootingfree.MyDouble.Unit.*;
 public class DesignOutFragment extends Fragment {
     View view;
     String Unit, Report;
-    MyDouble Bx, By, ex, ey, V;
+    MyDouble Bx, By, ex, ey, V, cx, cy, d;
     Padfooting padfooting;
 
     @Override
@@ -68,7 +68,6 @@ public class DesignOutFragment extends Fragment {
 
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
         if (getDesignInput()) {
 
 
@@ -78,9 +77,8 @@ public class DesignOutFragment extends Fragment {
             Bitmap bitmap = Bitmap.createBitmap(mbitmapWidth, mbitmapHeight, Bitmap.Config.ARGB_8888);
             int txtht = 15 * (int) getResources().getDisplayMetrics().density;
 
-            padfooting = new Footing_case4(bitmap, txtht,Bx, By, ex, ey, V);
-
-            Report = padfooting.getReport();
+            padfooting = new Footing_case4(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+            Report = padfooting.getDesignReport(MyDouble.UnitType.valueOf(Unit));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.sketch_img);
             imageView.setImageBitmap(padfooting.getSketch());
@@ -108,18 +106,24 @@ public class DesignOutFragment extends Fragment {
             Unit = sp.getString(getString(R.string.UNIT), getString(R.string.SI));
             //for SI unit
             if (Unit.equals(getString(R.string.SI))) {
-                Bx = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.BX_PREF), "")), MyDouble.Unit.m);
-                By = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.BY_PREF), "")), MyDouble.Unit.m);
-                ex = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.EX_PREF), "")), MyDouble.Unit.m);
-                ey = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.EY_PREF), "")), MyDouble.Unit.m);
+                Bx = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.BX_PREF), "")), MyDouble.Unit.mm);
+                By = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.BY_PREF), "")), MyDouble.Unit.mm);
+                ex = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.EX_PREF), "")), MyDouble.Unit.mm);
+                ey = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.EY_PREF), "")), MyDouble.Unit.mm);
                 V = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.V_PREF), "")), MyDouble.Unit.kN);
+                cx = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.CX_PREF), "")), MyDouble.Unit.mm);
+                cy = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.CY_PREF), "")), MyDouble.Unit.mm);
+                d = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.D_PREF), "")), MyDouble.Unit.mm);
 
             } else {
                 Bx = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.BX_PREF), "")), MyDouble.Unit.ft);
                 By = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.BY_PREF), "")), MyDouble.Unit.ft);
-                ex = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.EX_PREF), "")), MyDouble.Unit.ft);
-                ey = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.EY_PREF), "")), MyDouble.Unit.ft);
+                ex = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.EX_PREF), "")), MyDouble.Unit.in);
+                ey = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.EY_PREF), "")), MyDouble.Unit.in);
                 V = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.V_PREF), "")), MyDouble.Unit.kip);
+                cx = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.CX_PREF), "")), MyDouble.Unit.in);
+                cy = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.CY_PREF), "")), MyDouble.Unit.in);
+                d = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.D_PREF), "")), MyDouble.Unit.in);
 
             }
 

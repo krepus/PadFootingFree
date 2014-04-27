@@ -16,6 +16,9 @@
     <string name="V_str_ui">Axial load, P</string>
     <string name="ex_str_ui">Load eccentricity (along footing width), ex</string>
     <string name="ey_str_ui">Load eccentricity (along footing length), ey</string>
+    <string name="cx_str_ui">Pedestal dimension along Bx, cx</string>
+    <string name="cy_str_ui">Pedestal dimension along By, cy</string>
+    <string name="d_str_ui">Distance to tension reinforcement from top of footing slab, d</string>
 
 
     <!-- dimensions -->
@@ -30,6 +33,9 @@
     <string name="V_PREF">V_PREF</string>
     <string name="EX_PREF">EX_PREF</string>
     <string name="EY_PREF">EY_PREF</string>
+    <string name="CX_PREF">CX_PREF</string>
+    <string name="CY_PREF">CY_PREF</string>
+    <string name="D_PREF">D_PREF</string>
 
     <string name="UNIT">UNIT</string>
     <string name="SI">SI</string>

@@ -78,7 +78,7 @@
                 <EditText
                     style="@style/styEdit"
                     android:inputType="numberDecimal"
-                    android:text="0.375"
+                    android:text="375"
                     android:id="@+id/ex_in"
                     android:singleLine="true" />
             </TableRow>
@@ -95,13 +95,75 @@
                 <EditText
                     style="@style/styEdit"
                     android:inputType="numberDecimal"
-                    android:text="0.3"
+                    android:text="300"
                     android:id="@+id/ey_in"
                     android:singleLine="true" />
             </TableRow>
 
-        </TableLayout>
+            <TableRow
+                style="@style/styTextUi"
+                android:layout_gravity="left|center_vertical">
 
-    </LinearLayout>
+            <TextView
+                style="@style/styTextUi"
+                android:text="Parameters below only required for critical shear and moment calculation"
+                android:layout_marginTop="30dip" />
 
-</ScrollView>
+        </TableRow>
+
+
+        <TableRow
+            style="@style/styTextUi"
+            android:layout_gravity="left|center_vertical">
+
+            <TextView
+                style="@style/styTextUi"
+                android:text="@string/cx_str_ui"
+                android:id="@+id/cx_textview_ID" />
+
+            <EditText
+                style="@style/styEdit"
+                android:inputType="numberDecimal"
+                android:text="300"
+                android:id="@+id/cx_in"
+                android:singleLine="true" />
+        </TableRow>
+
+        <TableRow
+            style="@style/styTextUi"
+            android:layout_gravity="left|center_vertical">
+
+            <TextView
+                style="@style/styTextUi"
+                android:text="@string/cy_str_ui"
+                android:id="@+id/cy_textview_ID" />
+
+            <EditText
+                style="@style/styEdit"
+                android:inputType="numberDecimal"
+                android:text="300"
+                android:id="@+id/cy_in"
+                android:singleLine="true" />
+        </TableRow>
+        <TableRow
+            style="@style/styTextUi"
+            android:layout_gravity="left|center_vertical">
+
+            <TextView
+                style="@style/styTextUi"
+                android:text="@string/d_str_ui"
+                android:id="@+id/d_textview_ID" />
+
+            <EditText
+                style="@style/styEdit"
+                android:inputType="numberDecimal"
+                android:text="500"
+                android:id="@+id/d_in"
+                android:singleLine="true" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>
+
+    </ScrollView>

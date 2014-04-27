@@ -7,9 +7,9 @@ import android.graphics.Bitmap;
  */
 public interface Padfooting {
 
-    public String getReport();
+    public String getDesignReport(MyDouble.UnitType unitType);
 
-  //  public int getFootingCase();
+    //  public int getFootingCase();
 
     public Bitmap getSketch();
 }

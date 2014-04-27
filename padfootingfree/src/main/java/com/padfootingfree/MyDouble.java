@@ -147,10 +147,14 @@ public class MyDouble {
            /*pressure*/
             case MPa:
                 return new MyDouble(v(), Unit.MPa);
+            case kPa:
+                return new MyDouble(v() * 1000.d, Unit.kPa);
             case ksi:
                 return new MyDouble(v() * 0.14503773773020923d, Unit.ksi);
             case psi:
                 return new MyDouble(v() * 145.03773773020922d, Unit.psi);
+            case psf:
+                return new MyDouble(v() * 20885.43423315013d, Unit.psf);
 
            /*moment or enrgy*/
             case kNm:
@@ -230,10 +234,14 @@ public class MyDouble {
             //pressure
             case MPa:
                 return v();
+            case kPa:
+                return v() * 1000.d;
             case ksi:
                 return v() * 0.14503773773020923d;
             case psi:
                 return v() * 145.03773773020922d;
+            case psf:
+                return v() * 20885.43423315013d;
 
             //area
             case mm2:
@@ -296,7 +304,7 @@ public class MyDouble {
         in, m, ft, //length
         mm2, in2, //area
         kN, lbf, kip, //force
-        MPa, ksi, psi, //pressure
+        MPa, kPa, ksi, psi, psf, //pressure
         kipft, kNm, Nm, //moment
         kPa_per_mm, ksf_per_in, //subgrade reaction
         kN_per_m, kip_per_ft, lbf_per_ft, N_per_m  //force per unit length
