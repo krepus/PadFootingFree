@@ -19,6 +19,7 @@ public class DesignOutFragment extends Fragment {
     View view;
     String Unit, Report;
     MyDouble Bx, By, ex, ey, V, cx, cy, d;
+    double A, C;
     Padfooting padfooting;
 
     @Override
@@ -71,13 +72,27 @@ public class DesignOutFragment extends Fragment {
         if (getDesignInput()) {
 
 
+            A = -4 * ex.v() + 2 * Bx.v(); //in mm
+            C = 2 * By.v() - 4 * ey.v();
             //get display parameters and pass to sketch method
+
+
             int mbitmapWidth = getResources().getDisplayMetrics().widthPixels;
             int mbitmapHeight = mbitmapWidth;
             Bitmap bitmap = Bitmap.createBitmap(mbitmapWidth, mbitmapHeight, Bitmap.Config.ARGB_8888);
             int txtht = 15 * (int) getResources().getDisplayMetrics().density;
 
-            padfooting = new Footing_case4(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+            switch (getCase()) {
+                case 2:
+                    padfooting = new Footing_case2(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    break;
+                case 4:
+                    padfooting = new Footing_case4(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    break;
+                default:
+                    padfooting = new Footing_case4(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+            }
+
             Report = padfooting.getDesignReport(MyDouble.UnitType.valueOf(Unit));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.sketch_img);
@@ -90,6 +105,16 @@ public class DesignOutFragment extends Fragment {
 
         return view;
 
+
+    }
+
+    private int getCase() {
+
+        if (A < Bx.v() && C > By.v()) {
+            return 2;
+        } else if (A > Bx.v() & C > By.v() & Bx.v() / A + By.v() / C > 1.d) {
+            return 4;
+        } else return 1;
 
     }
 

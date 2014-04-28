@@ -16,7 +16,7 @@ import static com.padfootingfree.MyDouble.*;
 /**
  * Created by j0sua3 on 19/04/2014.
  */
-public class Footing_case4 extends PadfootingbitmapGeometry implements Padfooting {
+public class Footing_case2 extends PadfootingbitmapGeometry implements Padfooting {
 
     double Bx, By, ex, ey, V, cx, cy, d;
     double A, C;
@@ -24,7 +24,7 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
     final int numparam = 3;
 
 
-    Footing_case4(
+    Footing_case2(
             Bitmap bitmap,
             int txtht,
             MyDouble Bx,
@@ -56,30 +56,30 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
     }
 
 
-    public double[] get_a_type4() {
+    public double[] get_a() {
         double[] a = new double[numparam];
         double tgalpha;
         tgalpha = C / A;
         a[0] = (C - By) / tgalpha;
-        a[1] = Bx - a[0];
-        a[2] = Bx - a[0];
+        a[1] = 0.d;
+        a[2] = A - a[0];
 
         return a;
     }
 
-    public double[] get_c_type4() {
+    public double[] get_c() {
         double[] c = new double[numparam];
         double tgalpha;
         tgalpha = C / A;
         c[0] = By;
-        c[1] = (A - Bx) * tgalpha;
-        c[2] = c[0] - c[1];
+        c[1] = 0.d;
+        c[2] = By;
         return c;
     }
 
     public double[] get_F() {
-        double[] a = get_a_type4();
-        double[] c = get_c_type4();
+        double[] a = get_a();
+        double[] c = get_c();
         double[] F = new double[numparam];
         F[0] = a[0] * c[0];
         F[1] = a[1] * c[1];
@@ -89,7 +89,7 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
 
     public double get_ug() {
         double Ug;
-        double[] a = get_a_type4();
+        double[] a = get_a();
         double[] F = get_F();
         Ug = (a[0] * F[0] / 0.2e1 + (a[0] + a[1] / 0.2e1) * F[1] + (a[0] + a[2] / 0.3e1) * F[2]) / (F[0] + F[1] + F[2]);
         return (Ug);
@@ -97,14 +97,14 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
 
     public double get_vg() {
         double Vg;
-        double[] c = get_c_type4();
+        double[] c = get_c();
         double[] F = get_F();
         Vg = (c[0] * F[0] / 0.2e1 + c[1] * F[1] / 0.2e1 + (c[1] + c[2] / 0.3e1) * F[2]) / (F[0] + F[1] + F[2]);
         return (Vg);
     }
 
     public double[] get_e() {
-        double[] a = get_a_type4();
+        double[] a = get_a();
         double[] e = new double[numparam];
         double Ug;
         Ug = get_ug();
@@ -115,7 +115,7 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
     }
 
     public double[] get_f() {
-        double[] c = get_c_type4();
+        double[] c = get_c();
         double[] f = new double[numparam];
         double Vg = get_vg();
         f[0] = c[0] / 0.2e1 - Vg;
@@ -127,8 +127,8 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
     public double get_Ix() {
         double sumIs_i;
         double sumFf;
-        double[] a = get_a_type4();
-        double[] c = get_c_type4();
+        double[] a = get_a();
+        double[] c = get_c();
         double[] F = get_F();
         double[] f = get_f();
         sumIs_i = a[0] * pow(c[0], 0.3e1) / 0.12e2 + a[1] * pow(c[1], 0.3e1) / 0.12e2 + a[2] * pow(c[2], 0.3e1) / 0.36e2;
@@ -139,8 +139,8 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
     public double get_Iy() {
         double sumIt_i;
         double sumFe;
-        double[] a = get_a_type4();
-        double[] c = get_c_type4();
+        double[] a = get_a();
+        double[] c = get_c();
         double[] F = get_F();
         double[] e = get_e();
         sumIt_i = pow(a[0], 0.3e1) * c[0] / 0.12e2 + pow(a[1], 0.3e1) * c[1] / 0.12e2 + pow(a[2], 0.3e1) * c[2] / 0.36e2;
@@ -150,8 +150,8 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
 
     public double get_Ixy() {
         double Ist;
-        double[] a = get_a_type4();
-        double[] c = get_c_type4();
+        double[] a = get_a();
+        double[] c = get_c();
         double[] F = get_F();
         double[] e = get_e();
         double[] f = get_f();
