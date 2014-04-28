@@ -248,7 +248,7 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
                 double My_Xm = -(qmax * Xm * By * (C * Xm - 2 * C * A + A * By) / C / A) / 0.2e1;
                 return My_Xm;
             } else {
-                double My_bxo =1.d / (24.d * pow(A, 2.d)) * (C * qmax * (pow(Xm - bxo, 2.d))
+                double My_bxo = 1.d / (24.d * pow(A, 2.d)) * (C * qmax * (pow(Xm - bxo, 2.d))
                         * (6.d * A * A - 4.d * A * Xm - 8.d * A * bxo + Xm * Xm + 2.d * Xm * bxo + 3 * bxo * bxo))
                         + 1.d / (12.d * A * C) * (By * bxo * qmax * (4.d * C * bxo * bxo - 6.d * A * By
                         * Xm + 12.d * A * C * Xm + 3.d * A * By * bxo - 6.d * A * C * bxo - 6.d * C * Xm * bxo));
@@ -401,20 +401,18 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
         //intersection of line AC at y = mfBy
         //dimensions in mm
         float xfAC = (float) (bA.v() / bC.v() * (bC.v() - By * 1000.f) * mscale_geom);
-        float yfAC = (float) (bC.v() / bA.v() * (bA.v() - Bx * 1000.f) * mscale_geom);//taken from bottom of footing
+        float xfAC2 = (float) (bA.v() * mscale_geom);
 
-        PointF[] pointFs = new PointF[5];
+        PointF[] pointFs = new PointF[4];
         pointFs[0] = new PointF(0.f, 0.f);
         pointFs[1] = new PointF(xfAC, 0.f);
-        pointFs[2] = new PointF(mfBx, mfBy - yfAC);
-        pointFs[3] = new PointF(mfBx, mfBy);
-        pointFs[4] = new PointF(0.f, mfBy);
+        pointFs[2] = new PointF(xfAC2, mfBy);
+        pointFs[3] = new PointF(0.f, mfBy);
 
         float[] boundaryPts = {pointFs[0].x, pointFs[0].y,
                 pointFs[1].x, pointFs[1].y,
                 pointFs[2].x, pointFs[2].y,
-                pointFs[3].x, pointFs[3].y,
-                pointFs[4].x, pointFs[4].y,
+                pointFs[3].x, pointFs[3].y
         };
         //create matrix to translate
         Matrix matrix = new Matrix();
@@ -430,7 +428,6 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
         boundary.lineTo(boundaryPts[2], boundaryPts[3]);
         boundary.lineTo(boundaryPts[4], boundaryPts[5]);
         boundary.lineTo(boundaryPts[6], boundaryPts[7]);
-        boundary.lineTo(boundaryPts[8], boundaryPts[9]);
         boundary.lineTo(boundaryPts[0], boundaryPts[1]);
         //draw actual lines
         canvas.drawPath(boundary, paint);

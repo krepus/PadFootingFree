@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,11 @@ import android.widget.Toast;
 import static com.padfootingfree.MyDouble.Unit.*;
 
 public class DesignOutFragment extends Fragment {
+
+    //logging
+    public static final String mDebugTag = "DesignOutFragment";
+    public static final boolean mDebugLog = true;
+
     View view;
     String Unit, Report;
     MyDouble Bx, By, ex, ey, V, cx, cy, d;
@@ -84,12 +90,15 @@ public class DesignOutFragment extends Fragment {
 
             switch (getCase()) {
                 case 2:
+                    logDebug("case 2");
                     padfooting = new Footing_case2(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
                     break;
                 case 4:
+                    logDebug("case 4");
                     padfooting = new Footing_case4(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
                     break;
                 default:
+                    logDebug("case 1, but running case 4");
                     padfooting = new Footing_case4(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
             }
 
@@ -175,5 +184,9 @@ public class DesignOutFragment extends Fragment {
         }
 
 
+    }
+
+    void logDebug(String msg) {
+        if (mDebugLog) Log.d(mDebugTag, msg);
     }
 }
