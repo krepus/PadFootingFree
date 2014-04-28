@@ -8,8 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.pow;
+import static java.lang.Math.*;
 import static com.padfootingfree.MyDouble.Unit.*;
 import static com.padfootingfree.MyDouble.*;
 
@@ -245,13 +244,17 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
 
         if (Xm > 0.d) {
             if (bxo > Xm) {
-                double My_Xm = -(qmax * Xm * By * (C * Xm - 2 * C * A + A * By) / C / A) / 0.2e1;
+                double My_Xm = -(double) (qmax * Xm * Xm * By * (3 * A * By + 2 * C * Xm - 6 * C * A) / C / A) / 0.12e2;
                 return My_Xm;
             } else {
-                double My_bxo =1.d / (24.d * pow(A, 2.d)) * (C * qmax * (pow(Xm - bxo, 2.d))
-                        * (6.d * A * A - 4.d * A * Xm - 8.d * A * bxo + Xm * Xm + 2.d * Xm * bxo + 3 * bxo * bxo))
-                        + 1.d / (12.d * A * C) * (By * bxo * qmax * (4.d * C * bxo * bxo - 6.d * A * By
-                        * Xm + 12.d * A * C * Xm + 3.d * A * By * bxo - 6.d * A * C * bxo - 6.d * C * Xm * bxo));
+                double My_bxo = qmax * pow(C, -0.3e1) * (pow(A, 0.4e1) * pow(By, 0.4e1) + 0.6e1 * pow(A, 0.4e1)
+                        * By * By * C * C - 0.12e2 * Xm * pow(A, 0.3e1) * By * By * C * C - 0.4e1 * pow(A, 0.4e1)
+                        * By * pow(C, 0.3e1) + 0.12e2 * Xm * pow(A, 0.3e1) * By * pow(C, 0.3e1) + pow(Xm, 0.4e1)
+                        * pow(C, 0.4e1) + pow(A, 0.4e1) * pow(C, 0.4e1) + 0.4e1 * C * Xm * pow(A, 0.3e1)
+                        * pow(By, 0.3e1) - 0.4e1 * Xm * pow(A, 0.3e1) * pow(C, 0.4e1) - 0.4e1 * A
+                        * pow(Xm, 0.3e1) * pow(C, 0.4e1) + 0.6e1 * pow(C, 0.4e1) * A * A * Xm * Xm
+                        - 0.4e1 * pow(A, 0.4e1) * pow(By, 0.3e1) * C) * pow(A, -0.2e1) / 0.24e2;
+
 
                         /*= -qmax * pow(C, -0.3e1) * (0.5e1 * pow(A, 0.4e1) * pow(By, 0.4e1)
                         - 0.6e1 * pow(A, 0.4e1) * By * By * C * C + 0.12e2 * pow(A, 0.3e1) * By * By
@@ -304,16 +307,17 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
         if (Xm > 0.d) {
             if (byo > Xm) {
 
-                double Mx_Xv = (qmax * Xm * Xm * Bx * (-2 * A * Xm - 3 * C * Bx + 6 * C * A) / C / A) / 0.12e2;
-                return Mx_Xv;
+                double Mx_Xm = (double) (qmax * Xm * Xm * Bx * (-2 * A * Xm - 3 * C * Bx + 6 * C * A) / C / A) / 0.12e2;
+                return Mx_Xm;
             } else {
-                double Mx_byo = -qmax * pow(A, -0.3e1) * (pow(C, 0.4e1) * pow(Bx, 0.4e1) - 0.3e1
-                        * pow(C, 0.4e1) * Bx * Bx * A * A + 0.6e1 * pow(C, 0.3e1) * Bx * Bx * A
-                        * A * Xm + 0.2e1 * pow(C, 0.4e1) * Bx * pow(A, 0.3e1) - 0.6e1 * pow(C, 0.3e1)
-                        * Bx * pow(A, 0.3e1) * Xm - 0.2e1 * pow(Xm, 0.3e1) * pow(A, 0.4e1) - 0.2e1
-                        * A * pow(C, 0.3e1) * pow(Bx, 0.3e1) + 0.2e1 * pow(A, 0.4e1) * pow(C, 0.3e1)
-                        + 0.6e1 * C * pow(A, 0.4e1) * Xm * Xm - 0.6e1 * pow(A, 0.4e1) * C * C * Xm)
-                        * pow(C, -0.2e1) / 0.12e2;
+                double Mx_byo = qmax * pow(A, -0.3e1) * (pow(C, 0.4e1) * pow(Bx, 0.4e1) + 0.6e1
+                        * pow(C, 0.4e1) * Bx * Bx * A * A - 0.12e2 * Xm * pow(C, 0.3e1) * Bx * Bx
+                        * A * A - 0.4e1 * pow(C, 0.4e1) * Bx * pow(A, 0.3e1) + 0.12e2 * Xm * pow(C, 0.3e1)
+                        * Bx * pow(A, 0.3e1) + pow(A, 0.4e1) * pow(C, 0.4e1) + 0.4e1 * A * Xm * pow(C, 0.3e1)
+                        * pow(Bx, 0.3e1) - 0.4e1 * Xm * pow(A, 0.4e1) * pow(C, 0.3e1) - 0.4e1 * C * pow(Xm, 0.3e1)
+                        * pow(A, 0.4e1) + 0.6e1 * C * C * pow(A, 0.4e1) * Xm * Xm - 0.4e1 * pow(C, 0.4e1)
+                        * pow(Bx, 0.3e1) * A + pow(Xm, 0.4e1) * pow(A, 0.4e1)) * pow(C, -0.2e1) / 0.24e2;
+
 
                 return Mx_byo;
             }
@@ -345,7 +349,7 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
         MyDouble rVyz = new MyDouble(getShearVyz(), kN);
         MyDouble rMy = new MyDouble(getMy(), kNm);
         MyDouble rVxz = new MyDouble(getShearVxz(), kN);
-        MyDouble rMx = new MyDouble(getMx(), kN);
+        MyDouble rMx = new MyDouble(getMx(), kNm);
 
 
         if (unitType.equals(UnitType.SI)) {
