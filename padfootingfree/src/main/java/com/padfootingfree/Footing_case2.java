@@ -21,7 +21,7 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
     double Bx, By, ex, ey, V, cx, cy, d;
     double A, C;
     String report;
-    double z1, xt, xb, qmax;
+    double mz1, xt, xb, qmax;
     final int numparam = 3;
 
 
@@ -50,7 +50,7 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
         this.cx = cx.dblVal(m);
         this.cy = cy.dblVal(m);
         this.d = d.dblVal(m);
-        z1 = fz();
+        mz1 = fz();
         qmax = getqmax();
         xb = fxb();
         xt = fxt();
@@ -70,8 +70,26 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
         c = 0.12e2 * ey - 0.3e1 * By;
         z1 = (-b + Math.sqrt(b * b - 0.4e1 * a * c)) / a / 0.2e1;
         z2 = (-b - Math.sqrt(b * b - 0.4e1 * a * c)) / a / 0.2e1;
-        xb1 = ((-0.80e2 * pow(ey, 0.3e1) * Bx * By + 0.2e1 * pow(By, 0.4e1) * Bx - 0.4e1 * pow(By, 0.3e1) * ey * Bx + 0.64e2 * pow(ey, 0.4e1) * Bx + 0.24e2 * ey * ey * Bx * By * By + 0.160e3 * ex * By * pow(ey, 0.3e1) - 0.4e1 * pow(By, 0.4e1) * ex + 0.8e1 * ey * ex * pow(By, 0.3e1) - 0.128e3 * ex * pow(ey, 0.4e1) - 0.48e2 * ey * ey * ex * By * By) * z1 - 0.3e1 * pow(By, 0.3e1) * Bx + 0.18e2 * ey * Bx * By * By - 0.48e2 * ey * ey * Bx * By + 0.96e2 * pow(ey, 0.3e1) * Bx + 0.6e1 * pow(By, 0.3e1) * ex - 0.36e2 * ey * ex * By * By + 0.96e2 * ex * By * ey * ey - 0.192e3 * ex * pow(ey, 0.3e1)) * By / ((-0.2e1 * pow(By, 0.3e1) * ey - 0.8e1 * By * pow(ey, 0.3e1) + pow(By, 0.4e1) + 0.4e1 * By * By * ey * ey) * z1 + 0.4e1 * By * By * ey - pow(By, 0.3e1) + 0.16e2 * pow(ey, 0.3e1) - 0.4e1 * By * ey * ey) / ey / 0.4e1;
-        xb2 = ((-0.80e2 * pow(ey, 0.3e1) * Bx * By + 0.2e1 * pow(By, 0.4e1) * Bx - 0.4e1 * pow(By, 0.3e1) * ey * Bx + 0.64e2 * pow(ey, 0.4e1) * Bx + 0.24e2 * ey * ey * Bx * By * By + 0.160e3 * ex * By * pow(ey, 0.3e1) - 0.4e1 * pow(By, 0.4e1) * ex + 0.8e1 * ey * ex * pow(By, 0.3e1) - 0.128e3 * ex * pow(ey, 0.4e1) - 0.48e2 * ey * ey * ex * By * By) * z2 - 0.3e1 * pow(By, 0.3e1) * Bx + 0.18e2 * ey * Bx * By * By - 0.48e2 * ey * ey * Bx * By + 0.96e2 * pow(ey, 0.3e1) * Bx + 0.6e1 * pow(By, 0.3e1) * ex - 0.36e2 * ey * ex * By * By + 0.96e2 * ex * By * ey * ey - 0.192e3 * ex * pow(ey, 0.3e1)) * By / ((-0.2e1 * pow(By, 0.3e1) * ey - 0.8e1 * By * pow(ey, 0.3e1) + pow(By, 0.4e1) + 0.4e1 * By * By * ey * ey) * z2 + 0.4e1 * By * By * ey - pow(By, 0.3e1) + 0.16e2 * pow(ey, 0.3e1) - 0.4e1 * By * ey * ey) / ey / 0.4e1;
+        xb1 = ((-0.80e2 * pow(ey, 0.3e1) * Bx * By + 0.2e1 * pow(By, 0.4e1) * Bx - 0.4e1 * pow(By, 0.3e1)
+                * ey * Bx + 0.64e2 * pow(ey, 0.4e1) * Bx + 0.24e2 * ey * ey * Bx * By * By + 0.160e3
+                * ex * By * pow(ey, 0.3e1) - 0.4e1 * pow(By, 0.4e1) * ex + 0.8e1 * ey * ex * pow(By, 0.3e1)
+                - 0.128e3 * ex * pow(ey, 0.4e1) - 0.48e2 * ey * ey * ex * By * By) * z1 - 0.3e1
+                * pow(By, 0.3e1) * Bx + 0.18e2 * ey * Bx * By * By - 0.48e2 * ey * ey * Bx * By + 0.96e2
+                * pow(ey, 0.3e1) * Bx + 0.6e1 * pow(By, 0.3e1) * ex - 0.36e2 * ey * ex * By * By
+                + 0.96e2 * ex * By * ey * ey - 0.192e3 * ex * pow(ey, 0.3e1)) * By / ((-0.2e1
+                * pow(By, 0.3e1) * ey - 0.8e1 * By * pow(ey, 0.3e1) + pow(By, 0.4e1) + 0.4e1 * By
+                * By * ey * ey) * z1 + 0.4e1 * By * By * ey - pow(By, 0.3e1) + 0.16e2 * pow(ey, 0.3e1)
+                - 0.4e1 * By * ey * ey) / ey / 0.4e1;
+        xb2 = ((-0.80e2 * pow(ey, 0.3e1) * Bx * By + 0.2e1 * pow(By, 0.4e1) * Bx - 0.4e1 * pow(By, 0.3e1)
+                * ey * Bx + 0.64e2 * pow(ey, 0.4e1) * Bx + 0.24e2 * ey * ey * Bx * By * By + 0.160e3
+                * ex * By * pow(ey, 0.3e1) - 0.4e1 * pow(By, 0.4e1) * ex + 0.8e1 * ey * ex * pow(By, 0.3e1)
+                - 0.128e3 * ex * pow(ey, 0.4e1) - 0.48e2 * ey * ey * ex * By * By) * z2 - 0.3e1
+                * pow(By, 0.3e1) * Bx + 0.18e2 * ey * Bx * By * By - 0.48e2 * ey * ey * Bx * By + 0.96e2
+                * pow(ey, 0.3e1) * Bx + 0.6e1 * pow(By, 0.3e1) * ex - 0.36e2 * ey * ex * By * By + 0.96e2
+                * ex * By * ey * ey - 0.192e3 * ex * pow(ey, 0.3e1)) * By / ((-0.2e1 * pow(By, 0.3e1)
+                * ey - 0.8e1 * By * pow(ey, 0.3e1) + pow(By, 0.4e1) + 0.4e1 * By * By * ey * ey) * z2
+                + 0.4e1 * By * By * ey - pow(By, 0.3e1) + 0.16e2 * pow(ey, 0.3e1) - 0.4e1 * By * ey * ey)
+                / ey / 0.4e1;
         if (0.0e0 <= xb1 && xb1 <= Bx)
             return (z1);
         else if (0.0e0 <= xb2 && xb2 <= Bx)
@@ -83,14 +101,23 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
 
     public double fxb() {
         double xb;
-        xb = ((-0.80e2 * pow(ey, 0.3e1) * Bx * By + 0.2e1 * pow(By, 0.4e1) * Bx - 0.4e1 * pow(By, 0.3e1) * ey * Bx + 0.64e2 * pow(ey, 0.4e1) * Bx + 0.24e2 * ey * ey * Bx * By * By + 0.160e3 * ex * By * pow(ey, 0.3e1) - 0.4e1 * pow(By, 0.4e1) * ex + 0.8e1 * ey * ex * pow(By, 0.3e1) - 0.128e3 * ex * pow(ey, 0.4e1) - 0.48e2 * ey * ey * ex * By * By) * z1 - 0.3e1 * pow(By, 0.3e1) * Bx + 0.18e2 * ey * Bx * By * By - 0.48e2 * ey * ey * Bx * By + 0.96e2 * pow(ey, 0.3e1) * Bx + 0.6e1 * pow(By, 0.3e1) * ex - 0.36e2 * ey * ex * By * By + 0.96e2 * ex * By * ey * ey - 0.192e3 * ex * pow(ey, 0.3e1)) * By / ((-0.2e1 * pow(By, 0.3e1) * ey - 0.8e1 * By * pow(ey, 0.3e1) + pow(By, 0.4e1) + 0.4e1 * By * By * ey * ey) * z1 + 0.4e1 * By * By * ey - pow(By, 0.3e1) + 0.16e2 * pow(ey, 0.3e1) - 0.4e1 * By * ey * ey) / ey / 0.4e1;
+        xb = ((-0.80e2 * pow(ey, 0.3e1) * Bx * By + 0.2e1 * pow(By, 0.4e1) * Bx - 0.4e1 * pow(By, 0.3e1)
+                * ey * Bx + 0.64e2 * pow(ey, 0.4e1) * Bx + 0.24e2 * ey * ey * Bx * By * By + 0.160e3
+                * ex * By * pow(ey, 0.3e1) - 0.4e1 * pow(By, 0.4e1) * ex + 0.8e1 * ey * ex
+                * pow(By, 0.3e1) - 0.128e3 * ex * pow(ey, 0.4e1) - 0.48e2 * ey * ey * ex * By * By)
+                * mz1 - 0.3e1 * pow(By, 0.3e1) * Bx + 0.18e2 * ey * Bx * By * By - 0.48e2 * ey * ey
+                * Bx * By + 0.96e2 * pow(ey, 0.3e1) * Bx + 0.6e1 * pow(By, 0.3e1) * ex - 0.36e2
+                * ey * ex * By * By + 0.96e2 * ex * By * ey * ey - 0.192e3 * ex * pow(ey, 0.3e1))
+                * By / ((-0.2e1 * pow(By, 0.3e1) * ey - 0.8e1 * By * pow(ey, 0.3e1) + pow(By, 0.4e1)
+                + 0.4e1 * By * By * ey * ey) * mz1 + 0.4e1 * By * By * ey - pow(By, 0.3e1)
+                + 0.16e2 * pow(ey, 0.3e1) - 0.4e1 * By * ey * ey) / ey / 0.4e1;
         return (xb);
     }
 
 
     public double fxt() {
         double xt;
-        xt = z1 * By * (Bx - 2.d * ex);
+        xt = mz1 * By * (Bx - 2.d * ex);
         return (xt);
     }
 
@@ -101,7 +128,7 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
                 * pow(ey, 0.3e1) + 0.512e3 * pow(By, 0.5e1) * pow(ey, 0.4e1) - 0.1696e4 * pow(ey, 0.5e1)
                 * pow(By, 0.4e1) + 0.3520e4 * pow(By, 0.3e1) * pow(ey, 0.6e1) - 0.5632e4
                 * pow(ey, 0.7e1) * By * By + 0.8192e4 * By * pow(ey, 0.8e1) - 0.10e2 * pow(By, 0.8e1)
-                * ey + 0.44e2 * pow(By, 0.7e1) * ey * ey) * z1 - 0.14400e5 * pow(ey, 0.4e1)
+                * ey + 0.44e2 * pow(By, 0.7e1) * ey * ey) * mz1 - 0.14400e5 * pow(ey, 0.4e1)
                 * pow(By, 0.4e1) - 0.1152e4 * ey * ey * pow(By, 0.6e1) + 0.288e3 * ey
                 * pow(By, 0.7e1) + 0.4608e4 * pow(ey, 0.3e1) * pow(By, 0.5e1) + 0.32256e5
                 * pow(ey, 0.5e1) * pow(By, 0.3e1) - 0.59904e5 * pow(ey, 0.6e1) * By
@@ -116,7 +143,7 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
                 + 0.704e3 * pow(ey, 0.6e1) * Bx * By * By + 0.4608e4 * pow(ey, 0.7e1) * Bx * By
                 + 0.24e2 * pow(By, 0.7e1) * ex * ey - 0.6144e4 * pow(ey, 0.8e1) * Bx + 0.12288e5
                 * pow(ey, 0.8e1) * ex + 0.2e1 * pow(By, 0.8e1) * Bx - 0.4e1 * pow(By, 0.8e1) * ex)
-                * z1 - 0.4608e4 * pow(ey, 0.7e1) * Bx + 0.9216e4 * pow(ey, 0.7e1) * ex + 0.492e3
+                * mz1 - 0.4608e4 * pow(ey, 0.7e1) * Bx + 0.9216e4 * pow(ey, 0.7e1) * ex + 0.492e3
                 * pow(By, 0.4e1) * Bx * pow(ey, 0.3e1) - 0.126e3 * pow(By, 0.5e1) * Bx * ey * ey
                 + 0.27e2 * pow(By, 0.6e1) * Bx * ey - 0.1224e4 * pow(By, 0.3e1) * Bx
                 * pow(ey, 0.4e1) - 0.3072e4 * ex * By * pow(ey, 0.6e1) + 0.1152e4

@@ -93,6 +93,10 @@ public class DesignOutFragment extends Fragment {
                     logDebug("case 2");
                     padfooting = new Footing_case2(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
                     break;
+                case 3:
+                    logDebug("case 3");
+                    padfooting = new Footing_case3(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    break;
                 case 4:
                     logDebug("case 4");
                     padfooting = new Footing_case4(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
@@ -121,8 +125,10 @@ public class DesignOutFragment extends Fragment {
 
         if (A < Bx.v() && C > By.v()) {
             return 2;
-        } else if (A > Bx.v() & C > By.v() & Bx.v() / A + By.v() / C > 1.d) {
+        } else if (A > Bx.v() && C > By.v() && Bx.v() / A + By.v() / C > 1.d) {
             return 4;
+        } else if (A > Bx.v() && C < By.v()) {
+            return 3;
         } else return 1;
 
     }
