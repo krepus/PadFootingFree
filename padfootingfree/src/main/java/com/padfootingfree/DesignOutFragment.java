@@ -78,8 +78,8 @@ public class DesignOutFragment extends Fragment {
         if (getDesignInput()) {
 
 
-            A = -4 * ex.v() + 2 * Bx.v(); //in mm
-            C = 2 * By.v() - 4 * ey.v();
+            A = -4.d * ex.v() + 2.d * Bx.v(); //in mm
+            C = 2.d * By.v() - 4.d * ey.v();
             //get display parameters and pass to sketch method
 
 
@@ -100,6 +100,10 @@ public class DesignOutFragment extends Fragment {
                 case 4:
                     logDebug("case 4");
                     padfooting = new Footing_case4(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    break;
+                case 5:
+                    logDebug("case 5");
+                    padfooting = new Footing_case5(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
                     break;
                 default:
                     logDebug("case 1, but running case 4");
@@ -129,7 +133,11 @@ public class DesignOutFragment extends Fragment {
             return 4;
         } else if (A > Bx.v() && C < By.v()) {
             return 3;
-        } else return 1;
+        } else if (A < Bx.v() && C < By.v()) {
+            return 5;
+        } else
+
+            return 1;
 
     }
 

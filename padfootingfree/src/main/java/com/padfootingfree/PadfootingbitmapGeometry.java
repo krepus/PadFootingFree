@@ -19,7 +19,7 @@ public class PadfootingbitmapGeometry {
     public Canvas canvas;
     public Bitmap mbitmap_final;
 
-    public float mfBx, mfBy, mfex, mfey, mfA, mfC;
+    public float mfBx, mfBy, mfex, mfey;
     public int mbitmapWidth, mbitmapHeight;
 
     public double mscale_geom;
@@ -27,7 +27,7 @@ public class PadfootingbitmapGeometry {
     public PointF[] mPtsPF;
     public Paint mpaint;
 
-    MyDouble Bx, By, ex, ey, A, C;
+    MyDouble Bx, By, ex, ey;
 
 
     //constructor

@@ -19,16 +19,12 @@ import static com.padfootingfree.MyDouble.Unit.psf;
 import static com.padfootingfree.MyDouble.UnitType;
 import static java.lang.Math.*;
 
-/**
- * Created by j0sua3 on 19/04/2014.
- */
+
 public class Footing_case3 extends PadfootingbitmapGeometry implements Padfooting {
 
     double Bx, By, ex, ey, V, cx, cy, d;
-    double A, C;
     String report;
     double Z, yR, yL, qmax;
-    final int numparam = 3;
 
 
     Footing_case3(
@@ -51,8 +47,15 @@ public class Footing_case3 extends PadfootingbitmapGeometry implements Padfootin
         this.V = V.dblVal(kN);
         this.Bx = Bx.dblVal(m);
         this.By = By.dblVal(m);
-        this.ex = ex.dblVal(m);
+
+        if (ex.v() < 1.d) {
+            this.ex = 0.01d;
+        } else {
+            this.ex = ex.dblVal(m);
+        }
+
         this.ey = ey.dblVal(m);
+
         this.cx = cx.dblVal(m);
         this.cy = cy.dblVal(m);
         this.d = d.dblVal(m);
@@ -227,7 +230,7 @@ public class Footing_case3 extends PadfootingbitmapGeometry implements Padfootin
 
 
         if (unitType.equals(UnitType.SI)) {
-            report = "Parameter yR = " + ryR.toString() + "\r\n" +
+            report = "Parameter xb = " + ryR.toString() + "\r\n" +
                     "Parameter yL = " + ryL.toString() + "\r\n" +
                     "Maximum bearing, qmax = " + rqmax.toString() + "\r\n" +
                     "Shear force, Vyz = " + rVyz.toString() + "\r\n" +
@@ -236,7 +239,7 @@ public class Footing_case3 extends PadfootingbitmapGeometry implements Padfootin
                     "Moment, Mx = " + rMx.toString() + "\r\n";
 
         } else {
-            report = "Parameter yR = " + ryR.toUnit(ft).toString() + "\r\n" +
+            report = "Parameter xb = " + ryR.toUnit(ft).toString() + "\r\n" +
                     "Parameter yL = " + ryL.toUnit(ft).toString() + "\r\n" +
                     "Maximum bearing, qmax = " + rqmax.toUnit(psf).toString() + "\r\n" +
                     "Shear force, Vyz = " + rVyz.toUnit(kip).toString() + "\r\n" +

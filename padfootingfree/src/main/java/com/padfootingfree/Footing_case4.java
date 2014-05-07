@@ -12,9 +12,6 @@ import static java.lang.Math.*;
 import static com.padfootingfree.MyDouble.Unit.*;
 import static com.padfootingfree.MyDouble.*;
 
-/**
- * Created by j0sua3 on 19/04/2014.
- */
 public class Footing_case4 extends PadfootingbitmapGeometry implements Padfooting {
 
     double Bx, By, ex, ey, V, cx, cy, d;

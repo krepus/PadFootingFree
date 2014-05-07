@@ -13,9 +13,7 @@ import static java.lang.Math.pow;
 import static com.padfootingfree.MyDouble.Unit.*;
 import static com.padfootingfree.MyDouble.*;
 
-/**
- * Created by j0sua3 on 19/04/2014.
- */
+
 public class Footing_case2 extends PadfootingbitmapGeometry implements Padfooting {
 
     double Bx, By, ex, ey, V, cx, cy, d;
@@ -46,7 +44,12 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
         this.Bx = Bx.dblVal(m);
         this.By = By.dblVal(m);
         this.ex = ex.dblVal(m);
-        this.ey = ey.dblVal(m);
+
+        if (ey.v() < 1.d) {
+            this.ey = 0.01d;
+        } else {
+            this.ey = ey.dblVal(m);
+        }
         this.cx = cx.dblVal(m);
         this.cy = cy.dblVal(m);
         this.d = d.dblVal(m);
