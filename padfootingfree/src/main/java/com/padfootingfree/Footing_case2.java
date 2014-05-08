@@ -46,7 +46,7 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
         this.ex = ex.dblVal(m);
 
         if (ey.v() < 1.d) {
-            this.ey = 0.01d;
+            this.ey = 0.001d;
         } else {
             this.ey = ey.dblVal(m);
         }

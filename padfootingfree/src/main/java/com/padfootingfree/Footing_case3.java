@@ -49,7 +49,7 @@ public class Footing_case3 extends PadfootingbitmapGeometry implements Padfootin
         this.By = By.dblVal(m);
 
         if (ex.v() < 1.d) {
-            this.ex = 0.01d;
+            this.ex = 0.001d;
         } else {
             this.ex = ex.dblVal(m);
         }
@@ -230,7 +230,7 @@ public class Footing_case3 extends PadfootingbitmapGeometry implements Padfootin
 
 
         if (unitType.equals(UnitType.SI)) {
-            report = "Parameter xb = " + ryR.toString() + "\r\n" +
+            report = "Parameter yR = " + ryR.toString() + "\r\n" +
                     "Parameter yL = " + ryL.toString() + "\r\n" +
                     "Maximum bearing, qmax = " + rqmax.toString() + "\r\n" +
                     "Shear force, Vyz = " + rVyz.toString() + "\r\n" +
@@ -239,7 +239,7 @@ public class Footing_case3 extends PadfootingbitmapGeometry implements Padfootin
                     "Moment, Mx = " + rMx.toString() + "\r\n";
 
         } else {
-            report = "Parameter xb = " + ryR.toUnit(ft).toString() + "\r\n" +
+            report = "Parameter yR = " + ryR.toUnit(ft).toString() + "\r\n" +
                     "Parameter yL = " + ryL.toUnit(ft).toString() + "\r\n" +
                     "Maximum bearing, qmax = " + rqmax.toUnit(psf).toString() + "\r\n" +
                     "Shear force, Vyz = " + rVyz.toUnit(kip).toString() + "\r\n" +

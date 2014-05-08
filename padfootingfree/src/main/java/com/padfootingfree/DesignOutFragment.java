@@ -78,17 +78,16 @@ public class DesignOutFragment extends Fragment {
         if (getDesignInput()) {
 
 
-            A = -4.d * ex.v() + 2.d * Bx.v(); //in mm
-            C = 2.d * By.v() - 4.d * ey.v();
-            //get display parameters and pass to sketch method
-
-
             int mbitmapWidth = getResources().getDisplayMetrics().widthPixels;
             int mbitmapHeight = mbitmapWidth;
             Bitmap bitmap = Bitmap.createBitmap(mbitmapWidth, mbitmapHeight, Bitmap.Config.ARGB_8888);
             int txtht = 15 * (int) getResources().getDisplayMetrics().density;
 
             switch (getCase()) {
+                case 1:
+                    logDebug("case 2");
+                    padfooting = new Footing_case1(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    break;
                 case 2:
                     logDebug("case 2");
                     padfooting = new Footing_case2(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
@@ -106,8 +105,11 @@ public class DesignOutFragment extends Fragment {
                     padfooting = new Footing_case5(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
                     break;
                 default:
-                    logDebug("case 1, but running case 4");
-                    padfooting = new Footing_case4(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    logDebug("case error:");
+                    Toast.makeText(getActivity(), "Ooops..something is wrong..you may contact dev " +
+                            "and provide the inputs when this message pop up", Toast.LENGTH_LONG).show();
+                    padfooting = new Footing_case_error(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    break;
             }
 
             Report = padfooting.getDesignReport(MyDouble.UnitType.valueOf(Unit));
@@ -127,18 +129,26 @@ public class DesignOutFragment extends Fragment {
 
     private int getCase() {
 
-        if (A < Bx.v() && C > By.v()) {
-            return 2;
-        } else if (A > Bx.v() && C > By.v() && Bx.v() / A + By.v() / C > 1.d) {
-            return 4;
-        } else if (A > Bx.v() && C < By.v()) {
-            return 3;
-        } else if (A < Bx.v() && C < By.v()) {
-            return 5;
-        } else
-
+        if (ex.v() <= Bx.v() / 6.d && ey.v() <= By.v() / 6.d) {
             return 1;
+        } else {
 
+
+            A = -4.d * ex.v() + 2.d * Bx.v(); //in mm
+            C = 2.d * By.v() - 4.d * ey.v();
+
+            if (A < Bx.v() && C > By.v()) {
+                return 2;
+            } else if (A > Bx.v() && C > By.v() && Bx.v() / A + By.v() / C > 1.d) {
+                return 4;
+            } else if (A > Bx.v() && C < By.v()) {
+                return 3;
+            } else if (A < Bx.v() && C < By.v()) {
+                return 5;
+            } else
+
+                return -1;
+        }
     }
 
     private boolean getDesignInput() throws NumberFormatException {

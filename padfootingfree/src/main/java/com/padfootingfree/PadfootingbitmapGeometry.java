@@ -11,9 +11,6 @@ import android.graphics.PointF;
 
 import static java.lang.Math.max;
 
-/**
- * Created by j0sua3 on 14/07/13.
- */
 public class PadfootingbitmapGeometry {
 
     public Canvas canvas;
@@ -73,9 +70,6 @@ public class PadfootingbitmapGeometry {
 
     }
 
-    /**
-     * draw PF cross section
-     */
 
     public void drawPFplan(Paint paint) {
         //4 corner points
