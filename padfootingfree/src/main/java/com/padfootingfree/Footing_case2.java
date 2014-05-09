@@ -270,7 +270,7 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
         MyDouble rMy = new MyDouble(getMy(), kNm);
         MyDouble rVxz = new MyDouble(getVxz(), kN);
         MyDouble rMx = new MyDouble(getMx(), kNm);
-
+        MyDouble tmp = rqmax.toUnit(psf);
 
         if (unitType.equals(UnitType.SI)) {
             report = "Parameter xt = " + rxt.toString() + "\r\n" +
@@ -282,8 +282,8 @@ public class Footing_case2 extends PadfootingbitmapGeometry implements Padfootin
                     "Moment, Mx = " + rMx.toString() + "\r\n";
 
         } else {
-            report = "Parameter xt = " + rxt.toString() + "\r\n" +
-                    "Parameter xb = " + rxb.toString() + "\r\n" +
+            report = "Parameter xt = " + rxt.toUnit(ft).toString() + "\r\n" +
+                    "Parameter xb = " + rxb.toUnit(ft).toString() + "\r\n" +
                     "Maximum bearing, qmax = " + rqmax.toUnit(psf).toString() + "\r\n" +
                     "Shear force, Vyz = " + rVyz.toUnit(kip).toString() + "\r\n" +
                     "Moment, My = " + rMy.toUnit(kipft).toString() + "\r\n" +

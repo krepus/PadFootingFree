@@ -68,8 +68,16 @@ public class MyDouble {
             /*pressure*/
             case MPa:
                 return mValue;
+            case kPa:
+                return mValue * 0.001d;
             case ksi:
                 return mValue * 6.894757293168361d;
+            case psi:
+                return mValue * 0.00689475729316836d;
+            case psf:
+                return mValue * 0.00004788025898034d;
+
+
 
 
             /*moment or energy units*/

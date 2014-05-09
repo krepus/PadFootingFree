@@ -119,6 +119,8 @@ public class DesignOutFragment extends Fragment {
 
             TextView textView = (TextView) view.findViewById(R.id.report_textview_id);
             textView.setText(Report);
+        }else {
+
         }
 
 

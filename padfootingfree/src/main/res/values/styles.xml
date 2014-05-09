@@ -6,7 +6,6 @@
     </style>
 
 
-
     <style name="styTextUi" parent="AppTheme">
         <item name="android:layout_width">@dimen/txtviewwidth</item>
         <item name="android:layout_height">wrap_content</item>
@@ -17,6 +16,7 @@
     <style name="styEdit" parent="AppTheme">
         <item name="android:layout_width">@dimen/edittextwidth</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:selectAllOnFocus">true</item>
     </style>
 
     <style name="styCalcSection" parent="AppTheme">

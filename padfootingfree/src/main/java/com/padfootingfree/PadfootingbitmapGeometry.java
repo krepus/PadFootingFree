@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.Typeface;
 
 import static java.lang.Math.max;
 
@@ -114,6 +115,12 @@ public class PadfootingbitmapGeometry {
         //draw lines
         canvas.drawLines(horline, paint);
         canvas.drawLines(verline, paint);
+
+        //draw labels X & Y
+        canvas.drawText("Y", verline[0], verline[1] - mtxtht, paint);
+        canvas.drawText("X", horline[2] + 0.5f * mtxtht, horline[3] + 0.5f * mtxtht, paint);
+
+
     }
 
     /**
@@ -264,7 +271,7 @@ public class PadfootingbitmapGeometry {
         drawPFplan(mpaint);
 
         //draw boundary
-        mpaint.setColor(Color.BLACK);
+        mpaint.setColor(Color.BLUE);
         mpaint.setStyle(Paint.Style.STROKE);
         mpaint.setStrokeWidth(2.f);
         drawPFplan(mpaint);
@@ -287,11 +294,13 @@ public class PadfootingbitmapGeometry {
         drawPointLoadLocation(reopaint);
 
 
-        //draw CL
+        //draw CL and global axes labels
         Paint CLpaint = new Paint();
         CLpaint.setStyle(Paint.Style.FILL_AND_STROKE);
         CLpaint.setPathEffect(new DashPathEffect(new float[]{40, 10, 10, 10}, 0));
         CLpaint.setColor(Color.RED);
+        CLpaint.setTextSize(1.2f * mtxtht);
+        CLpaint.setTypeface(Typeface.create("Helvetica", Typeface.BOLD));
         drawCenterLine(CLpaint);
     }
 

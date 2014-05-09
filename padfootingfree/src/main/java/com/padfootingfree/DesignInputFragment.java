@@ -176,27 +176,6 @@ public class DesignInputFragment extends Fragment {
 
         SharedPreferences.Editor ed = sharedPref.edit();
         ed.apply();
-
-
-        //
-       /* Boolean barlistchanged = Boolean.parseBoolean(sharedPref.getString(
-                getString(R.string.BARLIST_RESET), "false"));
-        if (barlistchanged) {
-            updateSpinner();
-        } else {
-            updateSpinner();
-            //restore spinner selection
-            Spinner DBspinner = (Spinner) view.findViewById(R.id.spinner_minDB);
-            DBspinner.setSelection(
-                    Integer.parseInt(sharedPref.getString(getString(R.string.MIN_TENSION_BAR_DIA_ITEM_SELECTION), "0")));
-
-
-            Spinner tiespinner = (Spinner) view.findViewById(R.id.spinner_minTie);
-            tiespinner.setSelection(
-                    Integer.parseInt(sharedPref.getString(getString(R.string.MIN_TIE_BAR_DIA_ITEM_SELECTION), "0")));
-
-        }
-*/
     }
 
 }
