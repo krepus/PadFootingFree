@@ -117,7 +117,7 @@ public class PadfootingbitmapGeometry {
         canvas.drawLines(verline, paint);
 
         //draw labels X & Y
-        canvas.drawText("Y", verline[0], verline[1] - mtxtht, paint);
+        canvas.drawText("Y", verline[0], verline[1] -0.5f* mtxtht, paint);
         canvas.drawText("X", horline[2] + 0.5f * mtxtht, horline[3] + 0.5f * mtxtht, paint);
 
 

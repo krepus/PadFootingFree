@@ -42,15 +42,18 @@ public class Footing_case_error extends PadfootingbitmapGeometry implements Padf
         super(bitmap, txtht, Bx, By, ex, ey);
 
 
+        this.V = V.dblVal(kN);
+        this.Bx = Bx.dblVal(m);
+        this.By = By.dblVal(m);
+
 
     }
 
 
-
-
     public String getDesignReport(UnitType unitType) {
 
-        return "";
+        return "Oops, please check eccentricity, it might be outside \r\n" +
+                "of foundation area already. Foundation is unstable";
     }
 
 
@@ -76,12 +79,11 @@ public class Footing_case_error extends PadfootingbitmapGeometry implements Padf
     public void drawBearingArea(Paint paint) {
 
 
-
         PointF[] pointFs = new PointF[4];
         pointFs[0] = new PointF(0.f, 0.f);
         pointFs[1] = new PointF(mfBx, 0.f);
         pointFs[2] = new PointF(mfBx, mfBy);
-        pointFs[2] = new PointF(0.f, mfBy);
+        pointFs[3] = new PointF(0.f, mfBy);
 
         float[] boundaryPts = {pointFs[0].x, pointFs[0].y,
                 pointFs[1].x, pointFs[1].y,

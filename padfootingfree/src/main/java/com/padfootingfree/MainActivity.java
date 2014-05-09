@@ -1,29 +1,45 @@
 package com.padfootingfree;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import com.google.android.gms.ads.*;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
+    //logging
+    public static final String mDebugTag = "main activity";
+    public static final boolean mDebugLog = true;
 
     private FragmentTabHost mTabHost;
+    private InterstitialAd interstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //set defaults
         PreferenceManager.setDefaultValues(this, R.xml.preference, false);
+        // Create the interstitial.
+        interstitial = new InterstitialAd(this);
+        interstitial.setAdUnitId(getString(R.string.ad_unit_ID));
+        // Create ad request.
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("E204AA8798DCD03CAF2D96BEAEFB39B3")  // My Galaxy Nexus test phone
+                .build();
+        // Begin loading your interstitial.
+        interstitial.loadAd(adRequest);
+
 
         Context mCtxt = this;
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -32,17 +48,38 @@ public class MainActivity extends ActionBarActivity {
 
         // mTabHost.addTab(mTabHost.newTabSpec("design brief").setIndicator("design brief"),
         //         DesignBriefFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("design input").setIndicator("design input"),
+        mTabHost.addTab(mTabHost.newTabSpec("design input").setIndicator("DESIGN INPUT"),
                 DesignInputFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("design out").setIndicator("design out"),
+        mTabHost.addTab(mTabHost.newTabSpec("design out").setIndicator("DESIGN OUT"),
                 DesignOutFragment.class, null);
         setContentView(mTabHost);
+
+
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (interstitial.isLoaded()) {
+            interstitial.show();
+        }
+
+        logDebug("on pause");
+
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        /*if (interstitial.isLoaded()) {
+            interstitial.show();
+
+        }*/
+        logDebug("on destroy");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -88,6 +125,10 @@ public class MainActivity extends ActionBarActivity {
         bld.setNeutralButton("OK", null);
         //Log.d(TAG, "Showing alert dialog: " + message);
         bld.create().show();
+    }
+
+    void logDebug(String msg) {
+        if (mDebugLog) Log.d(mDebugTag, msg);
     }
 
 }

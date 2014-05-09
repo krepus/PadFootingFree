@@ -106,8 +106,8 @@ public class DesignOutFragment extends Fragment {
                     break;
                 default:
                     logDebug("case error:");
-                    Toast.makeText(getActivity(), "Ooops..something is wrong..you may contact dev " +
-                            "and provide the inputs when this message pop up", Toast.LENGTH_LONG).show();
+                    /*Toast.makeText(getActivity(), "Ooops..something is wrong, please ..you may contact dev " +
+                            "and provide the inputs when this message pop up", Toast.LENGTH_LONG).show();*/
                     padfooting = new Footing_case_error(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
                     break;
             }
@@ -119,7 +119,7 @@ public class DesignOutFragment extends Fragment {
 
             TextView textView = (TextView) view.findViewById(R.id.report_textview_id);
             textView.setText(Report);
-        }else {
+        } else {
 
         }
 
@@ -133,9 +133,7 @@ public class DesignOutFragment extends Fragment {
 
         if (ex.v() <= Bx.v() / 6.d && ey.v() <= By.v() / 6.d) {
             return 1;
-        } else {
-
-
+        } else if (isEccentricityValid()) {
             A = -4.d * ex.v() + 2.d * Bx.v(); //in mm
             C = 2.d * By.v() - 4.d * ey.v();
 
@@ -150,7 +148,17 @@ public class DesignOutFragment extends Fragment {
             } else
 
                 return -1;
+
+
+        } else {
+            return -1;
         }
+    }
+
+    private boolean isEccentricityValid() {
+        if (ex.v() > Bx.v() / 2.d || ey.v() > By.v() / 2.d) {
+            return false;
+        } else return true;
     }
 
     private boolean getDesignInput() throws NumberFormatException {

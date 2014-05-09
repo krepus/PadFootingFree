@@ -230,8 +230,9 @@ public class Footing_case3 extends PadfootingbitmapGeometry implements Padfootin
 
 
         if (unitType.equals(UnitType.SI)) {
-            report = "Parameter yR = " + ryR.toString() + "\r\n" +
-                    "Parameter yL = " + ryL.toString() + "\r\n" +
+            report = "" +
+                    //"Parameter yR = " + ryR.toString() + "\r\n" +
+                    //"Parameter yL = " + ryL.toString() + "\r\n" +
                     "Maximum bearing, qmax = " + rqmax.toString() + "\r\n" +
                     "Shear force, Vyz = " + rVyz.toString() + "\r\n" +
                     "Moment, My = " + rMy.toString() + "\r\n" +
