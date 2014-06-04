@@ -1,18 +1,25 @@
 package com.padfootingfree;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.ArrayList;
 
 import static com.padfootingfree.MyDouble.Unit.*;
 
@@ -204,6 +211,34 @@ public class DesignOutFragment extends Fragment {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.attach:
+                saveReportText(mColumn.getDesignReport());
+                saveReportPng(mColumn.getInteractionSketch());
+
+                Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                ArrayList<Uri> fileUris = new ArrayList<Uri>();
+                File file_to_share = new File(getActivity().getFilesDir(), getString(R.string.filename));
+                Uri contentUri = FileProvider.getUriForFile(getActivity(), "com.column.interaction.design.fileprovider", file_to_share);
+                fileUris.add(contentUri);
+
+                file_to_share = new File(getActivity().getFilesDir(), getString(R.string.filename_png));
+                contentUri = FileProvider.getUriForFile(getActivity(), "com.column.interaction.design.fileprovider", file_to_share);
+                fileUris.add(contentUri);
+
+                intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, fileUris);
+                intent.setType("image/*");
+                intent.setType("text/*");
+                startActivity(Intent.createChooser(intent, "Share files to.."));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void showSketch(int bearing_case) {
 
 
@@ -223,4 +258,6 @@ public class DesignOutFragment extends Fragment {
     void logDebug(String msg) {
         if (mDebugLog) Log.d(mDebugTag, msg);
     }
+
+
 }
