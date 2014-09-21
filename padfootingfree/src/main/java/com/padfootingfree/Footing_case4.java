@@ -208,7 +208,7 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
         return A * V / (X0 * (F[0] + F[1] + F[2]));
     }
 
-    public double getShearVyz() {
+    public double getVyz() {
 
         double qmax = getqmax();
         double Xv = Bx / 0.2e1 - cx / 0.2e1 - d;
@@ -268,7 +268,7 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
         }
     }
 
-    public double getShearVxz() {
+    public double getVxz() {
 
         double qmax = getqmax();
         double Xv = By / 0.2e1 - cy / 0.2e1 - d;
@@ -343,9 +343,9 @@ public class Footing_case4 extends PadfootingbitmapGeometry implements Padfootin
         MyDouble rA = new MyDouble(A, m);
         MyDouble rC = new MyDouble(C, m);
         MyDouble rqmax = new MyDouble(getqmax(), kPa);
-        MyDouble rVyz = new MyDouble(getShearVyz(), kN);
+        MyDouble rVyz = new MyDouble(getVyz(), kN);
         MyDouble rMy = new MyDouble(getMy(), kNm);
-        MyDouble rVxz = new MyDouble(getShearVxz(), kN);
+        MyDouble rVxz = new MyDouble(getVxz(), kN);
         MyDouble rMx = new MyDouble(getMx(), kNm);
 
 

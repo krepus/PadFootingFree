@@ -3,6 +3,7 @@ package com.padfootingfree;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import static com.padfootingfree.MyDouble.Unit.*;
+import static com.padfootingfree.Util.r2str;
 
 public class DesignOutFragment extends Fragment {
 
@@ -34,6 +37,7 @@ public class DesignOutFragment extends Fragment {
     MyDouble Bx, By, ex, ey, V, cx, cy, d;
     double A, C;
     Padfooting padfooting;
+    String strMx, strVyz, strMy, strVxz;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,28 +98,35 @@ public class DesignOutFragment extends Fragment {
                 case 1:
                     logDebug("case 2");
                     padfooting = new Footing_case1(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    //getDesignDataString();
+
                     break;
                 case 2:
                     logDebug("case 2");
                     padfooting = new Footing_case2(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    //getDesignDataString();
                     break;
                 case 3:
                     logDebug("case 3");
                     padfooting = new Footing_case3(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    //getDesignDataString();
                     break;
                 case 4:
                     logDebug("case 4");
                     padfooting = new Footing_case4(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    //getDesignDataString();
                     break;
                 case 5:
                     logDebug("case 5");
                     padfooting = new Footing_case5(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    //getDesignDataString();
                     break;
                 default:
                     logDebug("case error:");
                     /*Toast.makeText(getActivity(), "Ooops..something is wrong, please ..you may contact dev " +
                             "and provide the inputs when this message pop up", Toast.LENGTH_LONG).show();*/
                     padfooting = new Footing_case_error(bitmap, txtht, Bx, By, ex, ey, V, cx, cy, d);
+                    getDesignDataString();
                     break;
             }
 
@@ -126,10 +137,63 @@ public class DesignOutFragment extends Fragment {
 
             TextView textView = (TextView) view.findViewById(R.id.report_textview_id);
             textView.setText(Report);
-        } else {
-
         }
 
+        //button handler to send design data to beam app
+        Button button = (Button) view.findViewById(R.id.buttonSendDesignData_id);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
+                //check if beam app is installed
+                if (isAppInstalled("com.BeamDesign")) {
+
+                    strMx = Double.toString(padfooting.getMx());
+                    strMy = Double.toString(padfooting.getMy());
+                    strVyz = Double.toString(padfooting.getVyz());
+                    strVxz = Double.toString(padfooting.getVxz());
+                    //determine which is critical design action
+                    double r_alongX = Double.parseDouble(strMy) / By.v();
+                    double r_alongY = Double.parseDouble(strMx) / Bx.v();
+
+                    String M, V, b, h;
+
+                    if (r_alongX >= r_alongY) {
+                        M = strMy;
+                        V = strVxz;
+                        b = r2str(By.v(), 2);
+                        h = r2str(d.v(), 2);
+
+                    } else {
+                        M = strMx;
+                        V = strVyz;
+                        b =r2str(Bx.v(),2);
+                        h = r2str(d.v(),2);
+                    }
+                    Intent appIntent = getActivity().getPackageManager().getLaunchIntentForPackage("com.BeamDesign");
+                    appIntent.putExtra("MOMENT", M);
+                    appIntent.putExtra("SHEAR", V);
+                    appIntent.putExtra("WIDTH", b);
+                    appIntent.putExtra("DEPTH", h);
+                    startActivity(appIntent);
+
+                } else {
+                    if (isAppInstalled("com.android.vending")) {
+                        //launch market app and present to download beam app
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("market://details?id=com.BeamDesign"));
+                        startActivity(intent);
+                    } else {
+                        //launch market app and present to download beam app
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("http://play.google.com/store/search?q=pub: sibuyas"));
+                        startActivity(intent);
+                    }
+
+                }
+                ;
+            }
+        });
 
         return view;
 
@@ -216,6 +280,7 @@ public class DesignOutFragment extends Fragment {
         // handle item selection
         switch (item.getItemId()) {
             case R.id.attach:
+                /*
                 saveReportText(mColumn.getDesignReport());
                 saveReportPng(mColumn.getInteractionSketch());
 
@@ -230,9 +295,9 @@ public class DesignOutFragment extends Fragment {
                 fileUris.add(contentUri);
 
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, fileUris);
-                intent.setType("image/*");
-                intent.setType("text/*");
-                startActivity(Intent.createChooser(intent, "Share files to.."));
+                intent.setType("image*//*");
+                intent.setType("text*//*");
+                startActivity(Intent.createChooser(intent, "Share files to.."));*/
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -253,6 +318,26 @@ public class DesignOutFragment extends Fragment {
         }
 
 
+    }
+
+    public void getDesignDataString() {
+        strMx = Double.toString(padfooting.getMx());
+        strMy = Double.toString(padfooting.getMy());
+        strVyz = Double.toString(padfooting.getVyz());
+        strVxz = Double.toString(padfooting.getVxz());
+    }
+
+    private boolean isAppInstalled(String uri) {
+        //String uri = "com.BeamDesign";
+        PackageManager pm = getActivity().getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
     }
 
     void logDebug(String msg) {

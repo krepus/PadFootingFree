@@ -111,6 +111,24 @@ public class Footing_case_error extends PadfootingbitmapGeometry implements Padf
 
     }
 
+    public double getMx() {
+        return 0.d;
+    }
+
+    public double getVyz() {
+        return 0.d;
+    }
+
+
+    public double getMy() {
+        return 0.d;
+    }
+
+
+    public double getVxz() {
+        return 0.d;
+    }
+
 
 }
 

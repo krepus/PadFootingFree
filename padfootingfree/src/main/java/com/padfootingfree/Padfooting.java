@@ -10,6 +10,11 @@ public interface Padfooting {
     public String getDesignReport(MyDouble.UnitType unitType);
 
     //  public int getFootingCase();
+    public double getMx();
+    public double getVyz();
+    public double getMy();
+    public double getVxz();
 
     public Bitmap getSketch();
+
 }

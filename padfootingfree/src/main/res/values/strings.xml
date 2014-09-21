@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="google_play_services_version">4323000</integer>
+    <integer name="google_play_services_version">5077000</integer>
 
     <string name="app_name">Pad Foundation</string>
     <string name="action_settings">Settings</string>
@@ -21,6 +21,9 @@
     <string name="cy_str_ui">Pedestal dimension along By, cy</string>
     <string name="d_str_ui">Distance to tension reinforcement from top of footing slab, d</string>
 
+
+    <!-- output string -->
+    <string name="design_reo_str">Launch beam design app...</string>
 
     <!-- dimensions -->
     <dimen name="txtviewwidth">230dip</dimen>

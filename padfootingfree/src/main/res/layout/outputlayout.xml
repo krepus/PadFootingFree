@@ -40,6 +40,12 @@
             android:id="@+id/exportButton_id"
             android:paddingLeft="20dp" />
 
+        <Button
+            android:id="@+id/buttonSendDesignData_id"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/design_reo_str" />
+
     </TableLayout>
 
 </ScrollView>

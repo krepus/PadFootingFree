@@ -3,6 +3,7 @@ package com.padfootingfree;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 import com.google.android.gms.ads.*;
 
 
@@ -32,11 +35,11 @@ public class MainActivity extends FragmentActivity {
         PreferenceManager.setDefaultValues(this, R.xml.preference, false);
         // Create the interstitial.
         interstitial = new InterstitialAd(this);
-        interstitial.setAdUnitId(getString(R.string.ad_unit_ID));
+        interstitial.setAdUnitId(getString(R.string.ad_unit_interstitial));
         // Create ad request.
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("E204AA8798DCD03CAF2D96BEAEFB39B3")  // My Galaxy Nexus test phone
+                .addTestDevice(getString(R.string.MY_testdevice))  // My Galaxy Nexus test phone
                 .build();
         // Begin loading your interstitial.
         interstitial.loadAd(adRequest);
@@ -120,6 +123,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+
     void alert(String message) {
         AlertDialog.Builder bld = new AlertDialog.Builder(this);
         bld.setMessage(message);
@@ -127,6 +131,8 @@ public class MainActivity extends FragmentActivity {
         //Log.d(TAG, "Showing alert dialog: " + message);
         bld.create().show();
     }
+
+
 
     void logDebug(String msg) {
         if (mDebugLog) Log.d(mDebugTag, msg);
